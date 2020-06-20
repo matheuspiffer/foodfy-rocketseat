@@ -1,0 +1,25 @@
+@media (max-width: 900px) {
+    section.recipes {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+}
+@media (max-width: 650px) {
+  section.recipes {
+    grid-template-columns: repeat(1, 1fr);
+    }
+    .container .infos {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 50px;
+      }
+      .infos .recipes-infos {
+        margin-top: 50px;
+      }
+      .container .infos img {
+          width: 80%;
+          height: 80%;
+      }
+}

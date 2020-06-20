@@ -1,0 +1,26 @@
+{
+  "name": "foodfy",
+  "version": "1.0.0",
+  "description": "<h1>Projeto do curso do Launchbase da RocketSeat</h1>\r <p>Em desenvolvimento...</p>",
+  "main": "data.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matheuspiffer/foodfy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/matheuspiffer/foodfy/issues"
+  },
+  "homepage": "https://github.com/matheuspiffer/foodfy#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4",
+    "nunjucks": "^3.2.1"
+  }
+}

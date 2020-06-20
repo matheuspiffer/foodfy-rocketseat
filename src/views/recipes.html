@@ -1,0 +1,22 @@
+{% set length = 0 %}
+{% extends 'layout.html' %}
+{% block title %}
+  <title>Receitas</title>
+{% endblock title %}
+{% block content %}
+  <section class="recipes">
+    {% for item in items %}
+      <div class="recipe" id="{{length + 1}}">
+        <img src="{{item.image}}" alt=""/>  
+        <div class="recipe-info">
+          <h2>{{item.title}}</h2>
+          <p>por
+            {{item.author}}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </section>
+{% endblock content %}
+{% block script %}
+<script src="/script.js"></script>
+{% endblock script %}
