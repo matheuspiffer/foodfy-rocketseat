@@ -1,35 +1,20 @@
 const express = require('express')
 const nunjucks = require('nunjucks')
-
-const recipes = require('./data')
-
+const routes = require('./routes')
 const server = express()
+const methodOverride = require('method-override')
 
+server.use(express.urlencoded({ extended: true }))
 server.use(express.static('public'))
+server.use(methodOverride('_method'))
+server.use(routes)
 server.set('view engine', 'html')
-nunjucks.configure('src/views', {
+
+nunjucks.configure('views', {
     express: server,
     autoescape: false,
     noCache: true
 })
-
-server.get('/', (req, res) => {
-    res.render('index', { items: recipes })
-})
-server.get('/recipes', (req, res) => {
-    res.render('recipes', { items: recipes })
-})
-server.get("/recipes/:index", function (req, res) {
-    const ingredients = [...recipes];
-    const recipeIndex = req.params.index;
-    res.render('recipe', { item: ingredients[recipeIndex] })
-})
-server.get('/about', (req, res) => {
-    res.render('about')
-})
-
-
-
 
 server.listen(5000, function () {
     console.log('server is running');

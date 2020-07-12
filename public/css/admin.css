@@ -1,0 +1,110 @@
+.admin-header {
+    background-color: #111;
+    height: 80px;
+    width: 100%;
+}
+
+.logo-admin {
+    height: 100%;
+    max-width: 940px;
+    width: 90%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.logo-admin a {
+    margin: 0;
+    padding: 12px;
+}
+
+.recipes-admin {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 24px;
+}
+.recipe-admin {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    box-sizing: border-box;
+    column-gap: 8px;
+    height: 172px;
+}
+
+.recipe-admin span {
+    width: 100%;
+}
+.form {
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.form-details {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.form-details h1,
+.form-details button {
+    margin: 0;
+}
+
+.form-details button {
+    width: 140px;
+    height: 32px;
+    border-radius: 4px;
+    background-color: #6558c3;
+    color: white;
+    border: none;
+    font-weight: bold;
+}
+.form-details button:focus {
+    outline: none;
+}
+.form-fields {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.item {
+    margin: 0;
+}
+
+.item label {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+.item label,
+.item input {
+    display: block;
+    width: 100%;
+}
+
+.item input {
+    margin-bottom: 15px;
+    height: 24px;
+    padding: 2px 8px;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+
+}
+
+.item button {
+    padding: 4px;
+    margin-bottom: 30px;
+    font-size: 16px;
+    color: #6558c3;
+    background-color: transparent;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.item button:focus {
+    outline: none;
+}
