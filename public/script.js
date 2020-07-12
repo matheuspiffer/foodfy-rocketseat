@@ -1,4 +1,4 @@
-const recipeEl = document.querySelectorAll('#recipe')
+const recipeEl = document.querySelectorAll('.recipe')
 const toggleEl = document.querySelectorAll('.toggle')
 const recipeDataEl = document.querySelectorAll('.recipe-data')
 
@@ -13,7 +13,9 @@ toggleEl.forEach((el, index) => {
 })
 
 recipeEl.forEach((recipe, index) => {
+    console.log('oi')
     recipe.addEventListener('click', () => {
         window.location.href = '/recipes/' + index
     })
 })
+

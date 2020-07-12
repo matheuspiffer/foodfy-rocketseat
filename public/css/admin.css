@@ -91,20 +91,54 @@
     background-color: #ffffff;
     border: 1px solid #dddddd;
     border-radius: 4px;
-
 }
 
-.item button {
+.form-fields button {
     padding: 4px;
-    margin-bottom: 30px;
+    margin: 0 0 30px 0;
     font-size: 16px;
     color: #6558c3;
     background-color: transparent;
     border: none;
     font-weight: bold;
     cursor: pointer;
+    text-align: left;
+    width: 240px;
 }
 
-.item button:focus {
+.form-fields button:focus {
     outline: none;
+}
+
+.edit {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.edit {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    box-sizing: border-box;
+}
+.edit span {
+    margin: 0;
+}
+
+.edit span:first-child {
+    font-size: 24px;
+    color: #111;
+    font-weight: bold;
+}
+
+.edit span:last-child a {
+    width: 136px;
+    height: 37px;
+    background-color: #6558c3;
+    text-decoration: none;
+    padding: 8px;
+    border-radius: 4px;
+    color: white;
+    align-items: baseline;
 }

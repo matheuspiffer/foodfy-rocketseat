@@ -1,0 +1,55 @@
+{% extends 'admin.html' %}
+{% block content %}
+    <section>
+        <div class="edit">
+            <span>Receita:
+                {{item.title}}</span>
+            <span>
+                <a href="/admin/recipes/{{item.id}}/edit">Editar Receita</a>
+            </span>
+        </div>
+        <div class="single-recipe">
+            <div class="header">
+                <img src="{{item.image}}" alt="">
+                <h1>{{item.title}}</h1>
+                <p>por
+                    {{item.author}}</p>
+            </div>
+            <div class="title">
+                <h2>Ingredients</h2>
+                <a class='toggle'>MOSTRAR</a>
+            </div>
+            <div class="recipe-data">
+                <ul>
+                    {% for ingredient in item.ingredients %}
+                        <li>{{ingredient}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="title">
+                <h2>Modo de preparo</h2>
+                <a class='toggle'>MOSTRAR</a>
+            </div>
+            <div class="recipe-data">
+                <ul>
+
+                    {% for step in item.preparation %}
+                        <li>{{step}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% if item.information %}
+                <div class="title">
+                    <h2>Informações Adicionais</h2>
+                    <a class='toggle'>MOSTRAR</a>
+                </div>
+                <div class="recipe-data">
+                    <p>{{item.information}}</p>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock content %}
+{% block script %}
+    <script src="/script.js"></script>
+{% endblock script %}
