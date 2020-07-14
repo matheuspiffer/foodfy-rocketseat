@@ -1,17 +1,16 @@
 <div class="item">
     <label>Imagem da receita</label>
-    <input type="https" name="image" value={{item.image}}>
+<input type="https" name="image" value="{{item.image}}"/>
 </div>
 <div class="item">
     <label>Nome da receita</label>
-    <input type="text" name="title" value={{item.title}}>
-    <p>{{item.title}}</p>
+    <input type="text" name="title" value="{{item.title}}"/>
 </div>
 <div class="item" id="ingredients">
     <label>ingredientes</label>
     {% for ingredient in item.ingredients %}
     <div class="ingredient">
-        <input type="text" name="ingredients[]" value={{ingredient}}>
+        <input type="text" name="ingredients[]" value="{{ingredient}}"/>
     </div>
     {% endfor %}
 </div>
@@ -20,16 +19,16 @@
     <label>Modo de preparo</label>
     {% for preparation in item.preparation %}
     <div class="step">
-        <input type="text" name="preparation[]" value={{preparation}}>
+        <input type="text" name="preparation[]" value="{{preparation}}"/>
     </div>
     {% endfor %}
 </div>
 <button type="button" class="add-step">Adicionar novo passo</button>
 <div class="item">
     <label>informacoes adicionais</label>
-    <input type="text" name="information" value={{item.information}}>
+    <input type="text" name="information" value="{{item.information}}"/>
 </div>
 <div class="item">
     <label>Autor</label>
-    <input type="text" name="author" value={{item.author}}>
+    <input type="text" name="author" value="{{item.author}}"/>
 </div>

@@ -1,14 +1,19 @@
 {% extends 'admin.html' %}
 {% block content %}
-    <form class="form" action='/admin/recipes?_method=PUT' method='POST'>
-        <section class="form-details">
-            <h1>Criando receita</h1>
+    <section class="form-details">
+        <h1>Editar receita</h1>
+        <form action="/admin/recipes?_method=DELETE" method="POST">
+            <button type="submit">Excluir receita</button>
+              <input type="hidden" value="{{item.id}}" name="id">
+        </form>
+        <form class="form" action='/admin/recipes?_method=PUT' method='POST'>
             <button type="submit">Salvar receita</button>
-        </section>
-        <section class="form-fields">
-            {%include 'admin/fields.html'%}
-        </section>
-    </form>
+            <div class="form-fields">
+                {%include 'admin/fields.html'%}
+                <input type="hidden" value="{{item.id}}" name="id">
+            </div>
+        </form>
+    </section>
 {% endblock content %}
 
 {% block script %}
