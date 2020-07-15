@@ -21,32 +21,30 @@
 .recipes-admin {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    column-gap: 24px;
-}
-.recipe-admin {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    column-gap: 40px;
     box-sizing: border-box;
-    column-gap: 8px;
-    height: 172px;
+    margin-top: 20px;
 }
 
 .recipe-admin span {
     width: 100%;
 }
-.form {
-    width: 100%;
-    margin: 0 auto;
-    box-sizing: border-box;
-}
 
 .form-details {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     margin-bottom: 30px;
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    text-align: left;
+}
+.form {
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
 }
 
-.form-details h1,
 .form-details button {
     margin: 0;
 }
@@ -63,10 +61,10 @@
 .form-details button:focus {
     outline: none;
 }
-.form-fields {
+.form-delete {
     display: flex;
-    flex-direction: column;
-    text-align: left;
+    justify-content: flex-end;
+    margin: 12px 0;
 }
 
 .item {
@@ -141,4 +139,49 @@
     border-radius: 4px;
     color: white;
     align-items: baseline;
+}
+
+.card {
+    width: 36 0px;
+    height: 80px;
+    display: grid;
+    grid-template-columns: 172px 156px;
+    gap: 8px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+.card-image img {
+    width: 80%;
+    height: 80px;
+    margin: auto;
+    background-position: center;
+    background-size: cover;
+    border-radius: 8px;
+}
+
+.card-details {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    text-align: left;
+}
+
+.card-details a {
+    text-decoration: none;
+    color: #6558c3;
+    font-size: 14px;
+}
+
+.card-details p {
+    text-decoration: none;
+    color: #777;
+    font-size: 14px;
+}
+
+.card-details p,
+.card-details a,
+.card-details h4{
+    margin: 0 0 12px 0;
 }
