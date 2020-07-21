@@ -6,7 +6,7 @@
 {% block content %}
   <section class="recipes">
     {% for item in items %}
-      <div class="recipe" id="{{length + 1}}">
+      <div class="recipe" id="{{item.id}}">
         <img src="{{item.image}}" alt=""/>  
         <div class="recipe-info">
           <h2>{{item.title}}</h2>

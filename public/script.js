@@ -15,7 +15,7 @@ toggleEl.forEach((el, index) => {
 recipeEl.forEach((recipe, index) => {
     console.log('oi')
     recipe.addEventListener('click', () => {
-        window.location.href = '/recipes/' + index
+        window.location.href = '/recipes/' + recipe.id
     })
 })
 

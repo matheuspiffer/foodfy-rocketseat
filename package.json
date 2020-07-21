@@ -6,7 +6,7 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "npm-run-all -p nodemon browsersync",
-        "nodemon": "nodemon server.js",
+        "nodemon": "nodemon src/server.js",
         "browsersync": "browser-sync start --proxy http://localhost:5000 --files 'public, views, admin, client'"
     },
     "repository": {
@@ -24,7 +24,8 @@
         "express": "^4.17.1",
         "method-override": "^3.0.0",
         "nodemon": "^2.0.4",
-        "nunjucks": "^3.2.1"
+        "nunjucks": "^3.2.1",
+        "pg": "^8.3.0"
     },
     "devDependencies": {
         "browser-sync": "^2.26.7",

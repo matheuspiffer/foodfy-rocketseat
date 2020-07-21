@@ -77,12 +77,14 @@
     margin: 10px 0;
 }
 .item label,
-.item input {
+.item input,
+.item select {
     display: block;
     width: 100%;
 }
 
-.item input {
+.item input,
+.item select {
     margin-bottom: 15px;
     height: 24px;
     padding: 2px 8px;

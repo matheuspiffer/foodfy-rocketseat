@@ -1,0 +1,30 @@
+{% extends 'admin.html' %}
+{% block content %}
+    <h1>Editar receita</h1>
+    <section class="form-details">
+        <form class="form-delete" action="/admin/recipes?_method=DELETE" method="POST">
+            <button type="submit">Excluir receita</button>
+            <input type="hidden" value="{{item.id}}" name="id">
+        </form>
+        <form class="form" action='/admin/recipes?_method=PUT' method='POST'>
+            <div class="form-fields">
+                {%include 'admin/fields.html'%}
+                <input type="hidden" value="{{item.id}}" name="id">
+            </div>
+            <button type="submit">Salvar receita</button>
+        </form>
+
+    </section>
+{% endblock content %}
+
+{% block script %}
+    <script>
+        const formDelete = document.querySelector("#form-delete")
+        formDelete.addEventListener("submit", function (event) {
+            const confirmation = confirm("Deseja deletar ?")
+            if (!confirmation) {
+                event.preventDefault()
+            }
+        })
+    </script>
+{% endblock script %}
