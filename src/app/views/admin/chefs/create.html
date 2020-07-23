@@ -1,61 +1,13 @@
 {% extends 'admin.html' %}
 {% block content %}
-    <form class="form" action='/admin/recipes' method='POST'>
+    <form class="form" action='/admin/chefs'  method='POST'>
         <section class="form-details">
-            <h1>Criando receita</h1>
-            <button type="submit">Salvar receita</button>
+            <h1>Criando chef</h1>
+            <button type="submit">Salvar chef</button>
         </section>
         <section class="form-fields">
-            {%include 'admin/fields.html'%}
+            {%include 'admin/chefs/fields.html'%}
         </section>
     </form>
 
 {% endblock content %}
-
-{% block script %}
-    <script>
-        function addIngredient() {
-
-            if (event.target.classList.value === 'add-ingredient') {
-                const ingredients = document.querySelector("#ingredients");
-                const fieldContainer = document.querySelectorAll(".ingredient");
-
-                // Realiza um clone do último ingrediente adicionado
-                const newField = fieldContainer[fieldContainer.length - 1].cloneNode(true);
-       
-                // Não adiciona um novo input se o último tem um valor vazio
-                if (newField.children[0].value == "") 
-                    return false;
-                
-                // Deixa o valor do input vazio
-                newField
-                    .children[0]
-                    .value = "";
-                ingredients.appendChild(newField);
-            } else {
-                const ingredients = document.querySelector("#steps");
-                const fieldContainer = document.querySelectorAll(".step");
-
-                // Realiza um clone do último ingrediente adicionado
-                const newField = fieldContainer[fieldContainer.length - 1].cloneNode(true);
-
-                // Não adiciona um novo input se o último tem um valor vazio
-                if (newField.children[0].value == "") 
-                    return false;
-                
-                // Deixa o valor do input vazio
-                newField
-                    .children[0]
-                    .value = "";
-                ingredients.appendChild(newField);
-            }
-        }
-
-        document
-            .querySelector(".add-ingredient")
-            .addEventListener("click", addIngredient);
-        document
-            .querySelector(".add-step")
-            .addEventListener("click", addIngredient);
-    </script>
-{% endblock script %}

@@ -1,46 +1,8 @@
 <div class="item">
-    <label>Imagem da receita</label>
-    <input type="https" name="image" value="{{item.image}}"/>
+    <label>Nome</label>
+    <input type="https" name="name" value="{{chef.name}}"/>
 </div>
 <div class="item">
-    <label>Nome da receita</label>
-    <input type="text" name="title" value="{{item.title}}"/>
-</div>
-<div class="item" id="ingredients">
-    <label>ingredientes</label>
-    {% if item.ingredients %}
-        {% for ingredient in item.ingredients %}
-            <div class="ingredient">
-                <input type="text" name="ingredients[]" value="{{ingredient}}"/>
-            </div>
-        {% endfor %}
-    {% endif %}
-    <div class="ingredient">
-        <input type="text" name="ingredients[]" value="{{ingredient}}"/>
-    </div>
-
-</div>
-<button type="button" class="add-ingredient">Adicionar novo ingrediente</button>
-<div class="item" id="steps">
-    <label>Modo de preparo</label>
-    {% if item.preparation %}
-        {% for preparation in item.preparation %}
-            <div class="step">
-                <input type="text" name="preparation[]" value="{{preparation}}"/>
-            </div>
-        {% endfor %}
-    {% endif %}
-    <div class="step">
-        <input type="text" name="preparation[]" value="{{preparation}}"/>
-    </div>
-
-</div>
-<button type="button" class="add-step">Adicionar novo passo</button>
-<div class="item">
-    <label>informacoes adicionais</label>
-    <input type="text" name="information" value="{{item.information}}"/>
-</div>
-<div class="item">
-    <label>Autor</label>
-    <input type="text" name="author" value="{{item.author}}"/>
+    <label>Avatar URL</label>
+    <input type="text" name="avatar_url" value="{{chef.avatar_url}}"/>
 </div>

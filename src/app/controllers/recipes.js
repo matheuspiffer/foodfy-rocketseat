@@ -1,7 +1,6 @@
-const fs = require('fs')
+
 const Recipe = require('../models/recipe')
-// const { age, date, since } = require('../utils')
-// const { parse } = require('path')
+const { age, date, since } = require('../../lib/utils')
 
 exports.index = (req, res) => {
     Recipe.all(recipes => {
@@ -61,8 +60,6 @@ exports.put = (req, res) => {
         console.log(id)
         return res.redirect('recipes/' + id)
     })
-
-    return
 }
 
 exports.delete = (req, res) => {

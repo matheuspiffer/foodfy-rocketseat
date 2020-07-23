@@ -1,18 +1,17 @@
 {% extends 'admin.html' %}
 {% block content %}
     <div class="wrapper">
-        <h1>Gerenciador de receitas</h1>
+        <h1>Gerenciador de Chefs</h1>
     </div>
     <section class="recipes-admin">
-        {% for item in items %}
+        {% for chef in chefs %}
             <div class="card">
-                <div class="card-image">
-                    <img src="{{item.image}}"/>
+                <div class="chef-card-image">
+                    <img src="{{chef.avatar_url}}"/>
                 </div>
                 <div class="card-details">
-                    <h4>{{item.title}}</h4>
-                    <p>{{item.author}}</p>
-                    <a href="/admin/recipes/{{item.id}}">Visualizar</a>
+                    <h4>{{chef.name}}</h4>
+                    <a href="/admin/chefs/{{chef.id}}">Visualizar</a>
                 </div>
             </div>
         {% endfor %}
