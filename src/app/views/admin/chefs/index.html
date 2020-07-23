@@ -3,11 +3,11 @@
     <div class="wrapper">
         <h1>Gerenciador de Chefs</h1>
     </div>
-    <section class="recipes-admin">
+    <section class="main">
         {% for chef in chefs %}
             <div class="card">
                 <div class="chef-card-image">
-                    <img src="{{chef.avatar_url}}"/>
+                    <span style="background-image:url({{chef.avatar_url}})"></span>
                 </div>
                 <div class="card-details">
                     <h4>{{chef.name}}</h4>
