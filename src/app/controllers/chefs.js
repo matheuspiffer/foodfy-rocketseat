@@ -1,5 +1,6 @@
 
 const Chef = require('../models/chef')
+const Recipe = require('../models/recipe')
 const { age, date, since } = require('../../lib/utils')
 
 exports.index = (req, res) => {
@@ -28,39 +29,30 @@ exports.post = (req, res) => {
 exports.show = (req, res) => {
     const { id } = req.params
     Chef.find(id, chef => {
-        return res.render('admin/chefs/show', { chef })
+        Recipe.findByAuthor(id, recipes => {
+            return res.render('admin/chefs/show', { chef, recipes })
+        })
     })
 
 }
 
 exports.edit = (req, res) => {
-    // const { id } = req.params
-    // Chef.find(id, chef => {
-    //     console.log(chef)
-    //     chef.ingredients = chef.ingredients.split(' ')
-    //     chef.preparation = chef.preparation.split(' ')
-    //     Chef.chefSelectOption(chefs => {
-    //         return res.render('admin/chefs/edit', { item: chef, chefs })
-    //     })
-    // })
-    return
+    const { id } = req.params
+    Chef.find(id, chef => {
+        return res.render('admin/chefs/edit', { chef, })
+    })
 }
 
 exports.put = (req, res) => {
-
-    // Chef.update(req.body, (id) => {
-    //     console.log(id)
-    //     return res.redirect('chefs/' + id)
-    // })
-
-    return
+    console.log(req.body)
+    Chef.update(req.body, (id) => {
+        return res.redirect('chefs/' + id)
+    })
 }
 
 exports.delete = (req, res) => {
-    // const { id } = req.body
-    // Chef.delete(id, () => {
-    //     return res.redirect('chefs')
-    // })
-
-    return
+    const { id } = req.body
+    Chef.delete(id, () => {
+        return res.redirect('chefs')
+    })
 }

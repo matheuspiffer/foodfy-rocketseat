@@ -33,10 +33,6 @@ exports.post = (req, res) => {
 exports.show = (req, res) => {
     const { id } = req.params
     Recipe.find(id, recipe => {
-        console.log(recipe)
-        recipe.ingredients = recipe.ingredients.split(',')
-        recipe.preparation = recipe.preparation.split(',')
-
         return res.render('admin/recipes/show', { item: recipe })
     })
 
@@ -45,9 +41,6 @@ exports.show = (req, res) => {
 exports.edit = (req, res) => {
     const { id } = req.params
     Recipe.find(id, recipe => {
-        console.log(recipe)
-        recipe.ingredients = recipe.ingredients.split(' ')
-        recipe.preparation = recipe.preparation.split(' ')
         Recipe.chefSelectOption(chefs => {
             return res.render('admin/recipes/edit', { item: recipe, chefs })
         })
@@ -55,9 +48,8 @@ exports.edit = (req, res) => {
 }
 
 exports.put = (req, res) => {
+    Recipe.update(req.body, (id) => {   
 
-    Recipe.update(req.body, (id) => {
-        console.log(id)
         return res.redirect('recipes/' + id)
     })
 }

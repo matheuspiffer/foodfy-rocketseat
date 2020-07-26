@@ -30,9 +30,11 @@ module.exports = {
     },
     find(id, callback) {
         const query = `
-        SELECT chefs.*
+        SELECT chefs.*, count(recipes) AS total_recipes
         FROM chefs
-        WHERE chefs.id = $1`
+        LEFT JOIN recipes ON (chefs.id = recipes.chefe_id)
+        WHERE chefs.id = $1
+        GROUP BY chefs.id`
         db.query(query, [id], (err, results) => {
             if (err) throw 'Database error ' + err
             callback(results.rows[0])
@@ -47,22 +49,14 @@ module.exports = {
     },
     update(data, callback) {
         const query = `
-        UPDATE recipes SET
-        chefe_id=($1),
-        image=($2),
-        title=($3),
-        ingredients=($4),
-        preparation=($5),
-        information=($6)
-        WHERE id = $7
+        UPDATE chefs SET
+        name=($1),
+        avatar_url=($2)
+        WHERE id = $3
         RETURNING ID`
         const values = [
-            data.chefe_id,
-            data.image,
-            data.title,
-            data.ingredients,
-            data.preparation,
-            data.information,
+            data.name,
+            data.avatar_url,
             data.id
         ]
         db.query(query, values, (err, results) => {
@@ -71,7 +65,7 @@ module.exports = {
         })
     },
     delete(id, callback) {
-        db.query(`DELETE FROM recipes WHERE id = $1`, [id], (err, results) => {
+        db.query(`DELETE FROM chefs WHERE id = $1`, [id], (err, results) => {
             if (err) throw 'Database error ' + err
             callback()
         })

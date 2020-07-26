@@ -5,11 +5,11 @@
     </div>
     <section class="main">
         {% for chef in chefs %}
-            <div class="card">
+            <div class="chef-card">
                 <div class="chef-card-image">
                     <span style="background-image:url({{chef.avatar_url}})"></span>
                 </div>
-                <div class="card-details">
+                <div class="chef-card-details">
                     <h4>{{chef.name}}</h4>
                     <a href="/admin/chefs/{{chef.id}}">Visualizar</a>
                 </div>

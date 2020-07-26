@@ -19,7 +19,7 @@
     {% if item.ingredients %}
         {% for ingredient in item.ingredients %}
             <div class="ingredient">
-                <input type="text" name="ingredients[]" value="{ingredient}}"/>
+                <input type="text" name="ingredients[]" value="{{ingredient}}"/>
             </div>
         {% endfor %}
     {% endif %}
