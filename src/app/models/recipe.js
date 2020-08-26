@@ -5,7 +5,7 @@ module.exports = {
         const query = `
         SELECT recipes.*, chefs.name AS author 
         FROM recipes
-        LEFT JOIN chefs ON (chefs.id  = recipes.chefe_id)
+        LEFT JOIN chefs ON (chefs.id  = recipes.chef_id)
         `
         db.query(query, (err, results) => {
             if (err) throw 'DataBase error ' + err
@@ -15,7 +15,7 @@ module.exports = {
     create(data, callback) {
         const query = `
         INSERT INTO recipes(
-            chefe_id,
+            chef_id,
             image,
             title,
             ingredients,
@@ -25,7 +25,7 @@ module.exports = {
         ) VALUES ($1, $2, $3, $4, $5, $6, $7)
         RETURNING ID`
         const values = [
-            data.chefe_id,
+            data.chef_id,
             data.image,
             data.title,
             data.ingredients,
@@ -42,7 +42,7 @@ module.exports = {
         const query = `
         SELECT recipes.*, chefs.name AS author
         FROM recipes
-        LEFT JOIN chefs ON (chefs.id = recipes.chefe_id)
+        LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
         WHERE recipes.id = $1`
         db.query(query, [id], (err, results) => {
             if (err) throw 'Database error ' + err
@@ -53,7 +53,7 @@ module.exports = {
         const query = `
         SELECT recipes.*
         FROM recipes
-        WHERE recipes.chefe_id = $1`
+        WHERE recipes.chef_id = $1`
         db.query(query, [id], (err, results) => {
             if (err) throw 'Database error ' + err
             callback(results.rows)
@@ -69,7 +69,7 @@ module.exports = {
     update(data, callback) {
         const query = `
         UPDATE recipes SET
-        chefe_id=($1),
+        chef_id=($1),
         image=($2),
         title=($3),
         ingredients=($4),
@@ -78,7 +78,7 @@ module.exports = {
         WHERE id = $7
         RETURNING ID`
         const values = [
-            data.chefe_id,
+            data.chef_id,
             data.image,
             data.title,
             data.ingredients,
@@ -96,5 +96,16 @@ module.exports = {
             if (err) throw 'Database error ' + err
             callback()
         })
+    },
+
+    async search(filter){
+        let query = `SELECT recipes.*, chefs.name AS author
+                FROM recipes
+                LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
+                WHERE recipes.title ilike '%${filter}%'`
+
+               const recipes = await db.query(query)
+
+               return recipes.rows
     }
 }

@@ -4,6 +4,7 @@
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="/css/style.css"/>
+        <link rel="stylesheet" href="/css/admin.css"/>
         <link rel="stylesheet" href="/css/responsive.css">
         {% block title %}
             <title>Foodfy</title>
@@ -18,8 +19,22 @@
                     </a>
                 </div>
                 <div class="menu">
-                    <a href="/about">Sobre</a>  
-                    <a href="/recipes">Receitas</a>
+                    <ul>
+                        <li>
+                            <a href="/about">Sobre</a>
+                        </li>
+                        <li>
+                            <a href="/recipes">Receitas</a>
+                        </li>
+                        <li>
+                            <a href="/chefs">Chefs</a>
+                        </li>
+                    </ul>
+
+                    <form action="/recipes/search" class="search" method="GET">
+                        <input type="text" name="filter" placeholder="Buscar uma receita" {%if search.term%} value={{search.term}} {%endif%}>
+                        <button type="submit">Buscar</button>
+                    </form>
                 </div>
             </header>
             {% block content %}{% endblock content %}
@@ -28,6 +43,5 @@
             <p>Todos os direitos reservados, receitas Foodfy</p>
         </footer>
     </body>
-    {% block script %}
-    {% endblock script %}
+    {% block script %}{% endblock script %}
 </html>

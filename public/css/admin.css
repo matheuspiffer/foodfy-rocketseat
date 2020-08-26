@@ -32,20 +32,21 @@
 }
 
 .main-recipes {
-    display: flex;
-    /* grid-column: 1fr 1fr; */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     /* gap: 12px; */
     box-sizing: border-box;
     margin-top: 20px;
     justify-content: center;
     align-items: center;
-    width: 100%;
+  
 }
 .main-recipes .recipe-card {
     display: grid;
     grid-template-columns: 172px 240px;
     gap: 16px;
     text-align: left;
+    margin-bottom: 24px;
 }
 .main-recipes .recipe-card .recipe-card-details {
     margin: 0;
@@ -151,19 +152,19 @@
 .show-chef {
     margin: 0 40px;
 }
+.show-chef h2 {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 30px;
+}
 .edit {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    margin-bottom: 32px;
 }
 
-.edit {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 24px;
-    box-sizing: border-box;
-}
 .edit span {
     margin: 0;
 }
@@ -236,4 +237,33 @@
     text-decoration: none;
     color: #777;
     font-size: 14px;
+}
+
+.chef-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.chef-details img{
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 30px;
+}
+
+.chef-details h2 {
+    font-size: 36px;
+    line-height: 42px;
+    color: #111111;
+    margin-bottom: 4px;
+}
+
+.chef-details p {
+    font-size: 20px;
+    line-height: 24px;
+    color: #777777;
 }

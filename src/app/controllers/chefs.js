@@ -21,7 +21,7 @@ exports.post = (req, res) => {
         }
     })
     Chef.create(req.body, () => {
-        return res.redirect('admin/chefs')
+        return res.redirect('/admin/chefs')
     })
 
 }
