@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="/css/style.css"/>
         <link rel="stylesheet" href="/css/admin.css"/>
         <link rel="stylesheet" href="/css/responsive.css">
@@ -30,11 +31,12 @@
                             <a href="/chefs">Chefs</a>
                         </li>
                     </ul>
-
+                    {% if items %}
                     <form action="/recipes/search" class="search" method="GET">
                         <input type="text" name="filter" placeholder="Buscar uma receita" {%if search.term%} value={{search.term}} {%endif%}>
                         <button type="submit">Buscar</button>
                     </form>
+                    {% endif %}
                 </div>
             </header>
             {% block content %}{% endblock content %}
