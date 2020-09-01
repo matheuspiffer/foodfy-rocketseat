@@ -33,4 +33,6 @@ CREATE TABLE "recipe_files" (
 );
 
 ALTER TABLE "recipes" DROP COLUMN "image"
+ALTER TABLE "chefs" DROP COLUMN "avatar_url"
+ALTER TABLE "chefs" ADD "file_id" int REFERENCES "files" ("id")
 

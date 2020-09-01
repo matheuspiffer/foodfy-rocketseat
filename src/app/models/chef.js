@@ -1,42 +1,40 @@
 const db = require("../config/db");
 const { date } = require("../../lib/utils");
 module.exports = {
-  async all() {
+  all() {
     try {
       const query = `
             SELECT *
             FROM chefs
             `;
-      const results = await db.query(query);
-      return results.rows;
+      return db.query(query);
     } catch (err) {
       console.error(err);
     }
   },
-  create(data, callback) {
-    const query = `
-        INSERT INTO chefs(
-            name,
-            avatar_url,
-            created_at
-        ) VALUES ($1, $2, $3)`;
-    const values = [data.name, data.avatar_url, date(Date.now()).iso];
-    db.query(query, values, (err, results) => {
-      if (err) throw "Database error " + err;
-      callback();
-    });
+  create(data) {
+    try {
+      const query = `
+         INSERT INTO chefs(
+             name,
+             created_at,
+             file_id
+         ) VALUES ($1, $2, $3)`;
+      const values = [data.name, date(Date.now()).iso, data.fileId];
+      return db.query(query, values);
+    } catch (err) {
+      console.error(err);
+    }
   },
-  find(id, callback) {
+  find(id) {
     const query = `
         SELECT chefs.*, count(recipes) AS total_recipes
         FROM chefs
         LEFT JOIN recipes ON (chefs.id = recipes.chef_id)
+        LEFT JOIN files ON (chefs.file_id = files.id)
         WHERE chefs.id = $1
         GROUP BY chefs.id`;
-    db.query(query, [id], (err, results) => {
-      if (err) throw "Database error " + err;
-      callback(results.rows[0]);
-    });
+    return db.query(query, [id])
   },
 
   chefSelectOption(callback) {

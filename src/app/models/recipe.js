@@ -45,15 +45,12 @@ module.exports = {
         WHERE recipes.id = $1`
        return db.query(query, [id])
     },
-    findByAuthor(id, callback) {
+    findByAuthor(id) {
         const query = `
         SELECT recipes.*
         FROM recipes
         WHERE recipes.chef_id = $1`
-        db.query(query, [id], (err, results) => {
-            if (err) throw 'Database error ' + err
-            callback(results.rows)
-        })
+        return db.query(query, [id])
     },
 
     chefSelectOption() {
