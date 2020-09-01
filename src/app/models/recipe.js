@@ -37,16 +37,13 @@ module.exports = {
          console.error(err)
         }
     },
-    find(id, callback) {
+    find(id) {
         const query = `
         SELECT recipes.*, chefs.name AS author
         FROM recipes
         LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
         WHERE recipes.id = $1`
-        db.query(query, [id], (err, results) => {
-            if (err) throw 'Database error ' + err
-            callback(results.rows[0])
-        })
+       return db.query(query, [id])
     },
     findByAuthor(id, callback) {
         const query = `
@@ -59,11 +56,9 @@ module.exports = {
         })
     },
 
-    chefSelectOption(callback) {
-        db.query(`SELECT name, id FROM chefs`, (err, results) => {
-            if (err) throw 'Database error ' + err
-            callback(results.rows)
-        })
+    chefSelectOption() {
+        return db.query(`SELECT name, id FROM chefs`)
+        
     },
     update(data, callback) {
         const query = `
@@ -97,13 +92,13 @@ module.exports = {
         })
     },
 
-    async search(filter){
+     search(filter){
         let query = `SELECT recipes.*, chefs.name AS author
                 FROM recipes
                 LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
                 WHERE recipes.title ilike '%${filter}%'`
 
-               const recipes = await db.query(query)
+               const recipes =  db.query(query)
 
                return recipes.rows
     }

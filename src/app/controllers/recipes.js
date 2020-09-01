@@ -8,10 +8,13 @@ module.exports = {
       return res.render("admin/recipes/index", { items: recipes });
     });
   },
-  create(req, res) {
-    Recipe.chefSelectOption((chefs) => {
+  async create(req, res) {
+    try {
+      const chefs = await Recipe.chefSelectOption();
       return res.render("admin/recipes/create", { chefs });
-    });
+    } catch (err) {
+      console.error(err);
+    }
   },
   async post(req, res) {
     try {
@@ -25,34 +28,51 @@ module.exports = {
 
       const results = await Recipe.create(req.body);
       const recipeId = results.rows[0].id;
-      const filesPromises = req.files.map( (file) => {
-         return File.create({ ...file });
+      const filesPromises = req.files.map((file) => {
+        return File.create({ ...file });
       });
       const filesResults = await Promise.all(filesPromises);
-      const recipeFiles = filesResults.map(file=>{
-          const fileId = file.rows[0].id
-          File.createRelationBetweenRecipesAndFiles(recipeId, fileId)
-      })
-      await Promise.all(recipeFiles)
-      
-      return res.redirect("recipes/" +  recipeId + "/edit");
+      const recipeFiles = filesResults.map((file) => {
+        const fileId = file.rows[0].id;
+        File.createRelationBetweenRecipesAndFiles(recipeId, fileId);
+      });
+      await Promise.all(recipeFiles);
+
+      return res.redirect("recipes/" + recipeId + "/edit");
     } catch (err) {
       console.error(err);
     }
   },
-  show(req, res) {
-    const { id } = req.params;
-    Recipe.find(id, (recipe) => {
+  async show(req, res) {
+    try {
+      const { id } = req.params;
+      let results = await Recipe.find(id);
+      const recipe = results.rows[0]
       return res.render("admin/recipes/show", { item: recipe });
-    });
+    } catch (err) {
+      console.error(err);
+    }
   },
-  edit(req, res) {
-    const { id } = req.params;
-    Recipe.find(id, (recipe) => {
-      Recipe.chefSelectOption((chefs) => {
-        return res.render("admin/recipes/edit", { item: recipe, chefs });
-      });
-    });
+  async edit(req, res) {
+    try {
+      const { id } = req.params;
+      let results = await Recipe.find(id);
+      const recipe = results.rows[0];
+      results = await Recipe.chefSelectOption();
+      const chefs = results.rows;
+      results = await File.find(id);
+      let files = results.rows;
+      files = files.map((file) => ({
+        ...file,
+        address: `${req.protocol}://${req.headers.host}${file.path_file.replace(
+          "public",
+          ""
+        )}`,
+      }));
+      return res.render("admin/recipes/edit", { item: recipe, chefs, files });
+    } catch (err) {
+      console.error(err);
+    }
   },
   put(req, res) {
     Recipe.update(req.body, (id) => {

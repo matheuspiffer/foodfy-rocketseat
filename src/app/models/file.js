@@ -34,4 +34,13 @@ module.exports = {
       console.error(err);
     }
   },
+  find(recipeId){
+    const query = `
+    SELECT recipe_files.*, files.path AS path_file
+    FROM recipe_files
+    LEFT JOIN files ON (files.id = recipe_files.file_id)
+    WHERE recipe_files.recipe_id = $1
+    `
+    return db.query(query, [recipeId])
+  }
 };
