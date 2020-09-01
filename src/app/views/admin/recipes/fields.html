@@ -1,24 +1,24 @@
 <div class="item">
-        <div id="photos-upload">
-            <Label>Imagem da receita</Label>
-            <div class="image-upload-card">
+    <div id="photos-upload">
+        <Label>Imagem da receita</Label>
+        <div class="image-upload-card">
             <p>+</p>
             <input id="photos-input" name="photos" type="file" multiple accept="image/*" onchange="PhotosUpload.handleInputFile(event)">
-            </div>
         </div>
-        <div id="photos-preview">
-            {% if files %}
-                {% for image in files %}
-                    <div class="photo" id="{{image.id}}" onclick="PhotosUpload.removeOldPhoto(event)">
-                        <img src="{{image.address}}" alt="{{image.name}}">
-                        <i class="material-icons">
+    </div>
+    <div id="photos-preview">
+        {% if files %}
+            {% for image in files %}
+                <div class="photo" id="{{image.id}}" onclick="PhotosUpload.removeOldPhoto(event)">
+                    <img src="{{image.address}}" alt="{{image.name}}">
+                    <i class="material-icons">
                             close
                         </i>
-                    </div>
-                {% endfor %}
-                <input type="hidden" name="removed_files">
-            {% endif %}
-        </div>
+                </div>
+            {% endfor %}
+            <input type="hidden" name="removed_files">
+        {% endif %}
+    </div>
 </div>
 <div class="item">
     <label>Chefe da receita</label>
