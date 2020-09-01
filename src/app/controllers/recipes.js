@@ -18,25 +18,24 @@ module.exports = {
       const keys = Object.keys(req.body);
       keys.forEach((key) => {
         if (!req.body[key]) {
-          return res.send("please fill the " + " field");
+          return res.send("please fill the " + key + " field");
         }
       });
       if (req.files.length == 0) return res.send("Choose at least one image");
 
       const results = await Recipe.create(req.body);
       const recipeId = results.rows[0].id;
-      const filesPromises = req.files.map(async (file) => {
-        await File.create({ ...file });
+      const filesPromises = req.files.map( (file) => {
+         return File.create({ ...file });
       });
       const filesResults = await Promise.all(filesPromises);
-      console.log(filesResults);
-      // const recipeFiles = files.map(file=>{
-      //     const fileId = file.rows[0].id
-      //     File.createRelationBetweenRecipesAndFiles(recipeId, fileId)
-      // })
-
-      // await Promise.all(recipeFiles)
-      return res.redirect("recipes/");
+      const recipeFiles = filesResults.map(file=>{
+          const fileId = file.rows[0].id
+          File.createRelationBetweenRecipesAndFiles(recipeId, fileId)
+      })
+      await Promise.all(recipeFiles)
+      
+      return res.redirect("recipes/" +  recipeId + "/edit");
     } catch (err) {
       console.error(err);
     }
