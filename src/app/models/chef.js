@@ -4,8 +4,9 @@ module.exports = {
   all() {
     try {
       const query = `
-            SELECT *
+            SELECT chefs.*, files.path AS avatar
             FROM chefs
+            LEFT JOIN files ON (chefs.file_id = files.id)
             `;
       return db.query(query);
     } catch (err) {
@@ -28,22 +29,23 @@ module.exports = {
   },
   find(id) {
     const query = `
-        SELECT chefs.*, count(recipes) AS total_recipes
+        SELECT chefs.*, 
+        count(recipes) AS total_recipes,
+        files.path AS avatar
         FROM chefs
         LEFT JOIN recipes ON (chefs.id = recipes.chef_id)
         LEFT JOIN files ON (chefs.file_id = files.id)
         WHERE chefs.id = $1
-        GROUP BY chefs.id`;
+        GROUP BY chefs.id, files.path`;
     return db.query(query, [id])
   },
-
   chefSelectOption(callback) {
     db.query(`SELECT name, id FROM chefs`, (err, results) => {
       if (err) throw "Database error " + err;
       callback(results.rows);
     });
   },
-  update(data, callback) {
+  update(data) {
     const query = `
         UPDATE chefs SET
         name=($1),
@@ -51,10 +53,7 @@ module.exports = {
         WHERE id = $3
         RETURNING ID`;
     const values = [data.name, data.avatar_url, data.id];
-    db.query(query, values, (err, results) => {
-      if (err) throw "Database error " + err;
-      callback(results.rows[0].id);
-    });
+    return db.query(query, values)
   },
   delete(id, callback) {
     db.query(`DELETE FROM chefs WHERE id = $1`, [id], (err, results) => {

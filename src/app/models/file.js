@@ -1,5 +1,6 @@
 const db = require("../config/db");
 const recipe = require("./recipe");
+const fs = require('fs')
 
 module.exports = {
   create({ filename, path }) {
@@ -43,11 +44,22 @@ module.exports = {
     `;
     return db.query(query, [recipeId]);
   },
-  findByChef(id){
+  findByChef(id) {
     const query = `
     SELECT files.*
     FROM files
-    WHERE files.id = $1`
-   return db.query(query, [id])
-  }
+    WHERE files.id = $1`;
+    return db.query(query, [id]);
+  },
+   async delete(id) {
+    try {
+      const results = await db.query(`SELECT * FROM files WHERE id =$1`, [id]);
+      const file = results.rows[0];
+      console.log(file.path)
+      fs.unlinkSync(file.path);
+      return db.query(`DELETE FROM files WHERE id = $1`, [id]);
+    } catch (err) {
+      console.error(err);
+    }
+  },
 };

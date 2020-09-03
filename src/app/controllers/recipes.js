@@ -10,7 +10,8 @@ module.exports = {
   },
   async create(req, res) {
     try {
-      const chefs = await Recipe.chefSelectOption();
+      const results = await Recipe.chefSelectOption();
+      const chefs = results.rows
       return res.render("admin/recipes/create", { chefs });
     } catch (err) {
       console.error(err);
@@ -60,7 +61,7 @@ module.exports = {
       const recipe = results.rows[0];
       results = await Recipe.chefSelectOption();
       const chefs = results.rows;
-      results = await File.find(id);
+      results = await File.findByRecipe(id);
       let files = results.rows;
       files = files.map((file) => ({
         ...file,
@@ -69,15 +70,41 @@ module.exports = {
           ""
         )}`,
       }));
+      console.log(files)
       return res.render("admin/recipes/edit", { item: recipe, chefs, files });
     } catch (err) {
       console.error(err);
     }
   },
-  put(req, res) {
-    Recipe.update(req.body, (id) => {
-      return res.redirect("recipes/" + id);
+  async put(req, res) {
+    const keys = Object.keys(req.body);
+    keys.forEach((key) => {
+      if (!req.body[key] && key != "removed_files" && key != "photos") {
+        res.send("Please fill " + key);
+      }
     });
+    if (req.files.length != 0) {
+      const newFilesPromise = req.files.map((file) => {
+        File.create({ ...file, productId: req.body.id });
+      });
+      await Promise.all(newFilesPromise);
+    }
+    if (req.body.removed_files) {
+      const removedFiles = req.body.removed_files.split(",");
+      console.log(removedFiles)
+      const lastIndex = removedFiles.length - 1;
+      removedFiles.splice(lastIndex, 1);
+      console.log(removedFiles)
+      const removedFilesPromises = removedFiles.map((id) => {
+        console.log(id)
+        File.delete(id);
+      });
+      await Promise.all(removedFilesPromises);
+    }
+    const results = await Recipe.update(req.body)
+    const id = results.rows[0].id
+      return res.redirect("recipes/" + id);
+  
   },
   delete(req, res) {
     const { id } = req.body;

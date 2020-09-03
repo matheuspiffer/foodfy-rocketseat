@@ -1,16 +1,14 @@
 const db = require('../config/db')
 const { date } = require('../../lib/utils')
 module.exports = {
-    all(callback) {
+    all() {
         const query = `
         SELECT recipes.*, chefs.name AS author 
         FROM recipes
         LEFT JOIN chefs ON (chefs.id  = recipes.chef_id)
+        ORDER BY created_at ASC
         `
-        db.query(query, (err, results) => {
-            if (err) throw 'DataBase error ' + err
-            callback(results.rows)
-        })
+        return db.query(query)
     },
     create(data) {
         try{
@@ -20,17 +18,15 @@ module.exports = {
                 title,
                 ingredients,
                 preparation,
-                information,
-                created_at
-            ) VALUES ($1, $2, $3, $4, $5, $6)
+                information
+            ) VALUES ($1, $2, $3, $4, $5)
             RETURNING ID`
             const values = [
                 data.chef_id,
                 data.title,
                 data.ingredients,
                 data.preparation,
-                data.information,
-                date(Date.now()).iso,
+                data.information
             ]
             return db.query(query, values)
         } catch(err){
@@ -55,32 +51,26 @@ module.exports = {
 
     chefSelectOption() {
         return db.query(`SELECT name, id FROM chefs`)
-        
     },
-    update(data, callback) {
+    update(data) {
         const query = `
         UPDATE recipes SET
         chef_id=($1),
-        image=($2),
-        title=($3),
-        ingredients=($4),
-        preparation=($5),
-        information=($6)
-        WHERE id = $7
+        title=($2),
+        ingredients=($3),
+        preparation=($4),
+        information=($5)
+        WHERE id = $6
         RETURNING ID`
         const values = [
             data.chef_id,
-            data.image,
             data.title,
             data.ingredients,
             data.preparation,
             data.information,
             data.id
         ]
-        db.query(query, values, (err, results) => {
-            if (err) throw 'Database error ' + err
-            callback(results.rows[0].id)
-        })
+       return db.query(query, values)
     },
     delete(id, callback) {
         db.query(`DELETE FROM recipes WHERE id = $1`, [id], (err, results) => {

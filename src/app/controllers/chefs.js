@@ -7,7 +7,18 @@ module.exports = {
   async index(req, res) {
     try {
       const results = await Chef.all();
-      const chefs = results.rows;
+      let chefs = results.rows.map((chef) => {
+        return {
+          ...chef,
+          avatar: chef.avatar
+            ? `${req.protocol}://${req.headers.host}${chef.avatar.replace(
+                "public",
+                ""
+              )}`
+            : "",
+        };
+      });
+
       return res.render("admin/chefs/index", { chefs });
     } catch (err) {
       console.error(err);
@@ -47,28 +58,32 @@ module.exports = {
     const { id } = req.params;
     let results = await Chef.find(id);
     let chef = results.rows[0];
-     results = await File.findByChef(results.rows[0].file_id)
-     const avatar = results.rows[0].path
-     chef = {
-       ...chef,
-       avatar: `${req.protocol}://${req.headers.host}${avatar.replace("public","")}`
-     }
-     console.log(chef)
+    chef = {
+      ...chef,
+      avatar: chef.avatar
+        ? `${req.protocol}://${req.headers.host}${chef.avatar.replace(
+            "public",
+            ""
+          )}`
+        : "",
+    };
     results = await Recipe.findByAuthor(id);
     const recipes = results.rows;
     return res.render("admin/chefs/show", { chef, recipes });
   },
-  edit(req, res) {
+  async edit(req, res) {
     const { id } = req.params;
-    Chef.find(id, (chef) => {
-      return res.render("admin/chefs/edit", { chef });
-    });
+    const results = await Chef.find(id);
+    const chef = results.rows[0]
+    console.log(chef)
+    return res.render("admin/chefs/edit", { chef });
   },
-  put(req, res) {
+  async put(req, res) {
     console.log(req.body);
-    Chef.update(req.body, (id) => {
+    const results = await Chef.update(req.body)
+    const id = results.rows[0].id
       return res.redirect("chefs/" + id);
-    });
+
   },
   delete(req, res) {
     const { id } = req.body;
