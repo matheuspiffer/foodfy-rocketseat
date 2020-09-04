@@ -1,18 +1,23 @@
-const db = require('../config/db')
-const { date } = require('../../lib/utils')
+const db = require("../config/db");
+const { date } = require("../../lib/utils");
 module.exports = {
-    all() {
-        const query = `
-        SELECT recipes.*, chefs.name AS author 
-        FROM recipes
-        LEFT JOIN chefs ON (chefs.id  = recipes.chef_id)
-        ORDER BY created_at ASC
-        `
-        return db.query(query)
-    },
-    create(data) {
-        try{
-            const query = `
+  all() {
+    try {
+      const query = `
+            SELECT recipes.*, recipe_files.id AS file_id 
+            FROM recipes
+            LEFT JOIN recipe_files ON (recipe_files.recipe_id  = recipes.id)
+            LEFT JOIN files ON (files.recipe_id = recipes.id) 
+            ORDER BY created_at ASC
+            `;
+      return db.query(query);
+    } catch (err) {
+      console.error(err);
+    }
+  },
+  create(data) {
+    try {
+      const query = `
             INSERT INTO recipes(
                 chef_id,
                 title,
@@ -20,40 +25,48 @@ module.exports = {
                 preparation,
                 information
             ) VALUES ($1, $2, $3, $4, $5)
-            RETURNING ID`
-            const values = [
-                data.chef_id,
-                data.title,
-                data.ingredients,
-                data.preparation,
-                data.information
-            ]
-            return db.query(query, values)
-        } catch(err){
-         console.error(err)
-        }
-    },
-    find(id) {
-        const query = `
-        SELECT recipes.*, chefs.name AS author
-        FROM recipes
-        LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
-        WHERE recipes.id = $1`
-       return db.query(query, [id])
-    },
-    findByAuthor(id) {
-        const query = `
-        SELECT recipes.*
-        FROM recipes
-        WHERE recipes.chef_id = $1`
-        return db.query(query, [id])
-    },
+            RETURNING ID`;
+      const values = [
+        data.chef_id,
+        data.title,
+        data.ingredients,
+        data.preparation,
+        data.information,
+      ];
+      return db.query(query, values);
+    } catch (err) {
+      console.error(err);
+    }
+  },
+  find(id) {
+    try {
+      const query = `
+          SELECT recipes.*, chefs.name AS author
+          FROM recipes
+          LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
+          WHERE recipes.id = $1`;
+      return db.query(query, [id]);
+    } catch (err) {
+      console.error(err);
+    }
+  },
+  findByAuthor(id) {
+    try {
+      const query = `
+          SELECT recipes.*
+          FROM recipes
+          WHERE recipes.chef_id = $1`;
+      return db.query(query, [id]);
+    } catch (err) {
+      console.error(err);
+    }
+  },
 
-    chefSelectOption() {
-        return db.query(`SELECT name, id FROM chefs`)
-    },
-    update(data) {
-        const query = `
+  chefSelectOption() {
+    return db.query(`SELECT name, id FROM chefs`);
+  },
+  update(data) {
+    const query = `
         UPDATE recipes SET
         chef_id=($1),
         title=($2),
@@ -61,32 +74,32 @@ module.exports = {
         preparation=($4),
         information=($5)
         WHERE id = $6
-        RETURNING ID`
-        const values = [
-            data.chef_id,
-            data.title,
-            data.ingredients,
-            data.preparation,
-            data.information,
-            data.id
-        ]
-       return db.query(query, values)
-    },
-    delete(id, callback) {
-        db.query(`DELETE FROM recipes WHERE id = $1`, [id], (err, results) => {
-            if (err) throw 'Database error ' + err
-            callback()
-        })
-    },
+        RETURNING ID`;
+    const values = [
+      data.chef_id,
+      data.title,
+      data.ingredients,
+      data.preparation,
+      data.information,
+      data.id,
+    ];
+    return db.query(query, values);
+  },
+  delete(id, callback) {
+    db.query(`DELETE FROM recipes WHERE id = $1`, [id], (err, results) => {
+      if (err) throw "Database error " + err;
+      callback();
+    });
+  },
 
-     search(filter){
-        let query = `SELECT recipes.*, chefs.name AS author
+  search(filter) {
+    let query = `SELECT recipes.*, chefs.name AS author
                 FROM recipes
                 LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
-                WHERE recipes.title ilike '%${filter}%'`
+                WHERE recipes.title ilike '%${filter}%'`;
 
-               const recipes =  db.query(query)
+    const recipes = db.query(query);
 
-               return recipes.rows
-    }
-}
+    return recipes.rows;
+  },
+};

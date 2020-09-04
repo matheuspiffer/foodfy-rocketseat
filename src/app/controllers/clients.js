@@ -5,22 +5,31 @@ module.exports = {
     try {
       const results = await Recipe.all();
       const recipes = results.rows;
+      console.log(recipes)
       return res.render("./client/index", { items: recipes });
     } catch (err) {
       console.error(err);
     }
   },
-  recipes(req, res) {
-    Recipe.all((recipes) => {
+  async recipes(req, res) {
+    try {
+      const results = await Recipe.all();
+      const recipes = results.rows;
       return res.render("./client/recipes", { items: recipes });
-    });
+    } catch (err) {
+      console.error(err);
+    }
   },
 
-  recipe(req, res) {
-    const id = req.params.index;
-    Recipe.find(id, (recipe) => {
+  async recipe(req, res) {
+    try {
+      const id = req.params.index;
+      const results = await Recipe.find(id);
+      const recipe = results.rows[0];
       res.render("./client/recipe", { item: recipe });
-    });
+    } catch (err) {
+      console.error(err);
+    }
   },
   about(req, res) {
     res.render("./client/about");

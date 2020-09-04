@@ -3,15 +3,20 @@ const File = require("../models/file");
 const { age, date, since } = require("../../lib/utils");
 
 module.exports = {
-  index(req, res) {
-    Recipe.all((recipes) => {
+  async index(req, res) {
+    try {
+      const results = await Recipe.all();
+      const recipes = results.rows;
+      console.log(recipes)
       return res.render("admin/recipes/index", { items: recipes });
-    });
+    } catch (err) {
+      console.error(err);
+    }
   },
   async create(req, res) {
     try {
       const results = await Recipe.chefSelectOption();
-      const chefs = results.rows
+      const chefs = results.rows;
       return res.render("admin/recipes/create", { chefs });
     } catch (err) {
       console.error(err);
@@ -48,7 +53,7 @@ module.exports = {
     try {
       const { id } = req.params;
       let results = await Recipe.find(id);
-      const recipe = results.rows[0]
+      const recipe = results.rows[0];
       return res.render("admin/recipes/show", { item: recipe });
     } catch (err) {
       console.error(err);
@@ -70,7 +75,7 @@ module.exports = {
           ""
         )}`,
       }));
-      console.log(files)
+      console.log(files);
       return res.render("admin/recipes/edit", { item: recipe, chefs, files });
     } catch (err) {
       console.error(err);
@@ -91,20 +96,19 @@ module.exports = {
     }
     if (req.body.removed_files) {
       const removedFiles = req.body.removed_files.split(",");
-      console.log(removedFiles)
+      console.log(removedFiles);
       const lastIndex = removedFiles.length - 1;
       removedFiles.splice(lastIndex, 1);
-      console.log(removedFiles)
+      console.log(removedFiles);
       const removedFilesPromises = removedFiles.map((id) => {
-        console.log(id)
+        console.log(id);
         File.delete(id);
       });
       await Promise.all(removedFilesPromises);
     }
-    const results = await Recipe.update(req.body)
-    const id = results.rows[0].id
-      return res.redirect("recipes/" + id);
-  
+    const results = await Recipe.update(req.body);
+    const id = results.rows[0].id;
+    return res.redirect("recipes/" + id);
   },
   delete(req, res) {
     const { id } = req.body;

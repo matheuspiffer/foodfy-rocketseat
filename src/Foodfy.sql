@@ -30,6 +30,7 @@ ALTER TABLE "recipes" DROP COLUMN "image"
 ALTER TABLE "chefs" DROP COLUMN "avatar_url"
 ALTER TABLE "chefs" ADD "file_id" int REFERENCES "files" ("id")
 ALTER TABLE "recipes" ADD "updated_at" timestamp DEFAULT (now())
+
 CREATE FUNCTION trigger_set_timestamp()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -37,7 +38,10 @@ BEGIN
   RETURN NEW;
 END
 $$ LANGUAGE plpgsql;
+
 CREATE TRIGGER set_timestamp
 BEFORE UPDATE ON recipes
 FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timestamp()
+
+ALTER TABLE "files" ADD FOREIGN KEY ("recipe_id") REFERENCES "recipe_files" ("recipe_id");
