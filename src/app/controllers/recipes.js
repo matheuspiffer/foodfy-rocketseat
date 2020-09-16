@@ -6,8 +6,16 @@ module.exports = {
   async index(req, res) {
     try {
       const results = await Recipe.all();
-      const recipes = results.rows;
-      console.log(recipes)
+      const recipesPromise = results.rows.map(async (recipe) => {
+        const recipePath = await File.findByRecipe(recipe.id);
+        const path = recipePath.rows[0].path_file;
+        recipe.path = `${req.protocol}://${req.headers.host}${path.replace(
+          "public",
+          ""
+        )}`;
+        return recipe;
+      });
+      const recipes = await Promise.all(recipesPromise);
       return res.render("admin/recipes/index", { items: recipes });
     } catch (err) {
       console.error(err);

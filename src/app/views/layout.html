@@ -31,7 +31,7 @@
                             <a href="/chefs">Chefs</a>
                         </li>
                     </ul>
-                    {% if items %}
+                    {% if items or search %}
                     <form action="/recipes/search" class="search" method="GET">
                         <input type="text" name="filter" placeholder="Buscar uma receita" {%if search.term%} value={{search.term}} {%endif%}>
                         <button type="submit">Buscar</button>

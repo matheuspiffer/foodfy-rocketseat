@@ -7,11 +7,11 @@
         {% for item in items %}
             <div class="recipe-card">
                 <div class="recipe-card-image">
-                    <img src="{{item.image}}"/>
+                    <img src="{{item.path}}"/>
                 </div>
                 <div class="recipe-card-details">
                     <h4>{{item.title}}</h4>
-                    <p>{{item.author}}</p>
+                    <p>{{item.chef_name}}</p>
                     <a href="/admin/recipes/{{item.id}}">Visualizar</a>
                 </div>
             </div>

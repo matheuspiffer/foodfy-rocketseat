@@ -4,10 +4,10 @@ module.exports = {
   all() {
     try {
       const query = `
-            SELECT recipes.*, recipe_files.id AS file_id 
+            SELECT recipes.*, 
+            chefs.name AS chef_name
             FROM recipes
-            LEFT JOIN recipe_files ON (recipe_files.recipe_id  = recipes.id)
-            LEFT JOIN files ON (files.recipe_id = recipes.id) 
+            LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
             ORDER BY created_at ASC
             `;
       return db.query(query);
@@ -93,13 +93,17 @@ module.exports = {
   },
 
   search(filter) {
-    let query = `SELECT recipes.*, chefs.name AS author
-                FROM recipes
-                LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
-                WHERE recipes.title ilike '%${filter}%'`;
+    try {
+      console.log(filter)
+      let query = `SELECT recipes.*, 
+                  chefs.name AS chef_name
+                  FROM recipes
+                  LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
+                  WHERE recipes.title ilike '%${filter}%'`;
 
-    const recipes = db.query(query);
-
-    return recipes.rows;
+      return db.query(query);
+    } catch (err) {
+      console.error(err);
+    }
   },
 };
