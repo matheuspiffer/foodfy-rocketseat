@@ -45,3 +45,26 @@ FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timestamp()
 
 ALTER TABLE "files" ADD FOREIGN KEY ("recipe_id") REFERENCES "recipe_files" ("recipe_id");
+
+CREATE TABLE "users" (
+  "id" SERIAL PRIMARY KEY,
+  "name" text not null,
+  "email" text UNIQUE not null,
+  "password" text not null,
+  "reset_token" text,
+  "reset_token_expires" text,
+  "is_admin" boolean DEFAULT false,
+  "created_at" timestamp DEFAULT (now()),
+  "updated_at" timestamp DEFAULT (now())
+);
+
+
+CREATE TABLE "session" (
+  "sid" varchar NOT NULL COLLATE "default",
+  "sess" json NOT NULL,
+  "expire" timestamp(6) NOT NULL
+)
+WITH (OIDS=FALSE);
+ALTER TABLE "session" 
+ADD CONSTRAINT "session_pkey" 
+PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;
