@@ -204,7 +204,9 @@ section.about p {
 }
 
 /* SINGLE RECIPE */
-
+section.recipe-section{
+  width: 100%;
+}
 .single-recipe {
   text-align: left;
   position: relative;
@@ -213,11 +215,32 @@ section.about p {
   text-align: center;
 }
 
-.single-recipe img {
+.single-recipe .header .gallery .highlight img {
   width: 100%;
-  height:  auto;
+  height: 280px;
   border-radius: 15px;
+  object-fit: contain;
 }
+.single-recipe .header .gallery .gallery-preview {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.single-recipe .header .gallery .gallery-preview img{
+  width: 50px;
+  height: 50px;
+  margin: 0;
+  object-fit: contain;
+  opacity: 0.6;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.single-recipe .header .gallery .gallery-preview img:hover,
+.single-recipe .header .gallery .gallery-preview img.active {
+    opacity: 1;
+}
+
 .single-recipe h1 {
   padding: 10px;
   margin-top: 40px;
@@ -269,3 +292,4 @@ section.about p {
   text-align: left;
   margin: 0 0 36px 0;
 }
+

@@ -43,7 +43,7 @@ module.exports = {
       const results = await Recipe.create(req.body);
       const recipeId = results.rows[0].id;
       const filesPromises = req.files.map((file) => {
-        return File.create({ ...file });
+        return File.create({ ...file, recipeId });
       });
       const filesResults = await Promise.all(filesPromises);
       const recipeFiles = filesResults.map((file) => {
@@ -62,7 +62,17 @@ module.exports = {
       const { id } = req.params;
       let results = await Recipe.find(id);
       const recipe = results.rows[0];
-      return res.render("admin/recipes/show", { item: recipe });
+      results = await File.findByRecipe(id);
+      const files = results.rows.map((file) => {
+        return {
+          ...file,
+          path_file: `${req.protocol}://${
+            req.headers.host
+          }${file.path_file.replace("public", "")}`,
+        };
+      });
+      console.log(files);
+      return res.render("admin/recipes/show", { item: recipe, files });
     } catch (err) {
       console.error(err);
     }
@@ -83,7 +93,6 @@ module.exports = {
           ""
         )}`,
       }));
-      console.log(files);
       return res.render("admin/recipes/edit", { item: recipe, chefs, files });
     } catch (err) {
       console.error(err);

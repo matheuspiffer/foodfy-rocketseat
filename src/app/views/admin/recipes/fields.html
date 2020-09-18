@@ -46,7 +46,7 @@
     </div>
 
 </div>
-<button type="button" class="add-ingredient">Adicionar novo ingrediente</button>
+<button type="button" class="add-ingredient" onclick="Preparation.addIngredient(event)">Adicionar novo ingrediente</button>
 <div class="item" id="steps">
     <label>Modo de preparo</label>
     {% if item.preparation %}
@@ -61,7 +61,7 @@
     </div>
 
 </div>
-<button type="button" class="add-step">Adicionar novo passo</button>
+<button type="button" class="add-step" onclick="Preparation.addIngredient(event)">Adicionar novo passo</button>
 <div class="item">
     <label>informacoes adicionais</label>
     <input type="text" name="information" value="{{item.information}}"/>

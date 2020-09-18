@@ -3,17 +3,18 @@ const recipe = require("./recipe");
 const fs = require('fs')
 
 module.exports = {
-  create({ filename, path }) {
+  create({ filename, path, recipeId }) {
     try {
       const query = `
             INSERT INTO files(
                 name,
-                path
-                )VALUES ($1, $2)
+                path,
+                recipe_id
+                )VALUES ($1, $2, $3)
                 RETURNING id
                 `;
 
-      const values = [filename, path];
+      const values = [filename, path, recipeId];
 
       return db.query(query, values);
     } catch (err) {

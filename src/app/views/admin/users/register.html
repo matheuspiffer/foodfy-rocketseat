@@ -1,6 +1,6 @@
 {% extends 'admin.html' %}
 {% block content %}
-    <form class="form" action='/admin/user' method='POST'>
+    <form class="form" action='/admin/users' method='POST'>
         <section class="user-details">
             <h1>Criar Usuário</h1>
             <div class="user-button">
@@ -11,11 +11,11 @@
         <section class="user-field">
             <div class="item">
                 <label>Nome</label>
-                <input type="text" name="name" placeholder="Digite o nome completo" value="{{user.name}}"/>
+                <input type="text" name="name" placeholder="Digite o nome completo" value="{{user.name}}" required/>
             </div>
             <div class="item">
                 <label>Email</label>
-                <input type="text" name="email" placeholder="Digite o email" value="{{user.email}}"/>
+                <input type="text" name="email" placeholder="Digite o email" value="{{user.email}}" required/>
             </div>
             <div class="item">
                 <input type="checkbox" name="admin"/>

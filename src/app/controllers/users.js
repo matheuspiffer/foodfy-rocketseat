@@ -1,3 +1,4 @@
+const User = require("../models/user")
 module.exports = {
   create(req, res) {
     try {
@@ -11,6 +12,17 @@ module.exports = {
       return res.render("./admin/users/edit");
     } catch (err) {
       console.error(err);
+    }
+  },
+  async post(req, res) {
+    try{
+     
+      await User.create(req.body);
+   
+      return res.redirect("/admin/users");
+    }
+    catch(err){
+      console.error(err)
     }
   },
 };

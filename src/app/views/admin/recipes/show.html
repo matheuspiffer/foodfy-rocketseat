@@ -1,6 +1,6 @@
 {% extends 'admin.html' %}
 {% block content %}
-    <section>
+    <section class="recipe-section">
         <div class="edit">
             <span>Receita:
                 {{item.title}}</span>
@@ -10,7 +10,20 @@
         </div>
         <div class="single-recipe">
             <div class="header">
-                <img src="{{item.image}}" alt="">
+                <div class="gallery">
+                    <div class="highlight">
+                        {% if not files[0] %}
+                            <img src="http://placehold.it/500x500?text=produto sem foto" alt="">
+                            {%else%}
+                            <img src="{{files[0].path_file}}">
+                        {% endif %}
+                    </div>
+                    <div class="gallery-preview">
+                        {% for image in files %}
+                            <img src="{{image.path_file}}"{% if loop.index0 == 0 %} class="active" {% endif %} onclick="ImageGallery.setImage(event)">
+                        {% endfor %}
+                    </div>
+                </div>
                 <h1>{{item.title}}</h1>
                 <p>por
                     {{item.author}}</p>
@@ -50,6 +63,3 @@
         </div>
     </section>
 {% endblock content %}
-{% block script %}
-    <script src="/script.js"></script>
-{% endblock script %}

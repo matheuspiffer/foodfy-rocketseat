@@ -1,3 +1,5 @@
+
+
 const recipeEl = document.querySelectorAll(".recipe");
 const toggleEl = document.querySelectorAll(".toggle");
 const recipeDataEl = document.querySelectorAll(".recipe-data");
@@ -5,6 +7,7 @@ const recipeDataEl = document.querySelectorAll(".recipe-data");
 let show = false;
 
 toggleEl.forEach((el, index) => {
+  console.log(el)
   el.addEventListener("click", () => {
     recipeDataEl[index].classList.toggle("show");
     const text = el.innerHTML === "ESCONDER" ? "MOSTRAR" : "ESCONDER";
@@ -13,43 +16,39 @@ toggleEl.forEach((el, index) => {
 });
 
 recipeEl.forEach((recipe, index) => {
-  console.log("oi");
   recipe.addEventListener("click", () => {
     window.location.href = "/recipes/" + recipe.id;
   });
 });
 
-function addIngredient() {
-  if (event.target.classList.value === "add-ingredient") {
-    const ingredients = document.querySelector("#ingredients");
-    const fieldContainer = document.querySelectorAll(".ingredient");
-    // Realiza um clone do último ingrediente adicionado
-    const newField = fieldContainer[fieldContainer.length - 1].cloneNode(true);
-    // Não adiciona um novo input se o último tem um valor vazio
-    if (newField.children[0].value == "") return false;
-    // Deixa o valor do input vazio
-    newField.children[0].value = "";
-    ingredients.appendChild(newField);
-  } else {
-    const ingredients = document.querySelector("#steps");
-    const fieldContainer = document.querySelectorAll(".step");
-
-    // Realiza um clone do último ingrediente adicionado
-    const newField = fieldContainer[fieldContainer.length - 1].cloneNode(true);
-
-    // Não adiciona um novo input se o último tem um valor vazio
-    if (newField.children[0].value == "") return false;
-
-    // Deixa o valor do input vazio
-    newField.children[0].value = "";
-    ingredients.appendChild(newField);
+const Preparation = {
+  addIngredient(event) {
+    if (event.target.classList.value === "add-ingredient") {
+      const ingredients = document.querySelector("#ingredients");
+      const fieldContainer = document.querySelectorAll(".ingredient");
+      // Realiza um clone do último ingrediente adicionado
+      const newField = fieldContainer[fieldContainer.length - 1].cloneNode(true);
+      // Não adiciona um novo input se o último tem um valor vazio
+      if (newField.children[0].value == "") return false;
+      // Deixa o valor do input vazio
+      newField.children[0].value = "";
+      ingredients.appendChild(newField);
+    } else {
+      const ingredients = document.querySelector("#steps");
+      const fieldContainer = document.querySelectorAll(".step");
+  
+      // Realiza um clone do último ingrediente adicionado
+      const newField = fieldContainer[fieldContainer.length - 1].cloneNode(true);
+  
+      // Não adiciona um novo input se o último tem um valor vazio
+      if (newField.children[0].value == "") return false;
+  
+      // Deixa o valor do input vazio
+      newField.children[0].value = "";
+      ingredients.appendChild(newField);
+    }
   }
 }
-
-document
-  .querySelector(".add-ingredient")
-  .addEventListener("click", addIngredient);
-document.querySelector(".add-step").addEventListener("click", addIngredient);
 
 const PhotosUpload = {
   input: "",
@@ -140,3 +139,20 @@ const PhotosUpload = {
     photoDiv.remove();
   },
 };
+
+const ImageGallery = {
+  previews: document.querySelectorAll('.gallery-preview img'),
+  highlight: document.querySelector('.highlight > img'),
+  setImage(e) {
+      const { target } = e
+      ImageGallery.previews.forEach(preview => {
+          preview.classList.remove('active')
+      })
+      target.classList.add('active')
+      ImageGallery.highlight.src = target.src
+      console.log(e)
+  }
+}
+
+
+
