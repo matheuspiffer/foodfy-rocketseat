@@ -31,7 +31,7 @@ module.exports = {
     async all(){
         try{
             const query =`
-            SELECT name, email, is_admin FROM users`
+            SELECT id, name, email, is_admin FROM users`
             return await db.query(query)
         }
         catch(err){

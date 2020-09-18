@@ -6,13 +6,13 @@ const chefs = require('../app/controllers/chefs')
 
 
 routes.get("/admin/chefs", chefs.index); // Mostrar a lista de chefs
-routes.get("/admin/chefs/create", chefs.create); // Mostrar formulário de nova receita
-routes.get("/admin/chefs/:id", chefs.show); // Exibir detalhes de uma receita
-routes.get("/admin/chefs/:id/edit", chefs.edit); // Mostrar formulário de edição de receita
+routes.get("/admin/chefs/create", chefs.create); // Mostrar formulário de novo chef
+routes.get("/admin/chefs/:id", chefs.show); // Exibir detalhes de um chef
+routes.get("/admin/chefs/:id/edit", chefs.edit); // Mostrar formulário de edição de chefs
 
-routes.post("/admin/chefs", multer.array("photo", 1),chefs.post); // Cadastrar nova receita
-routes.put("/admin/chefs", chefs.put); // Editar uma receita
-routes.delete("/admin/chefs", chefs.delete); // Deletar uma receita
+routes.post("/admin/chefs", multer.array("photo", 1),chefs.post); // Cadastrar nova chefs
+routes.put("/admin/chefs", chefs.put); // Editar um chef
+routes.delete("/admin/chefs", chefs.delete); // Deletar um chef
 
 
 
