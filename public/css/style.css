@@ -10,7 +10,7 @@
 }
 html,
 body {
-    min-height: 100vh;
+  min-height: 100vh;
 }
 body {
   font-family: "Roboto", sans-serif;
@@ -28,6 +28,8 @@ body {
 }
 header {
   display: flex;
+  flex-direction: row;
+  align-items: center;
   width: 100%;
   margin-bottom: 50px;
   padding-top: 20px;
@@ -42,28 +44,25 @@ header .logo a {
   width: 100%;
   height: 100%;
 }
-header .logo a img{
+header .logo a img {
   align-self: baseline;
 }
 header .menu {
-  margin: 0;
   width: 100%;
+  margin: 0 20px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 header .menu ul {
   display: flex;
-  justify-content: space-between;
-
+  justify-content: left;
+  margin: 0;
 }
 header .menu ul li {
   display: flex;
   list-style-type: none;
   justify-content: center;
- 
-
+  margin: 0;
 }
 header .menu ul li a {
   color: black;
@@ -75,7 +74,12 @@ header .menu ul li a {
 header .menu ul li a:hover {
   color: #af3618;
 }
-header form.search input{
+header form.search {
+  margin: 0;
+  align-self: center;
+  width: 100%;
+}
+header form.search input {
   height: 37px;
   width: 246px;
   padding: 0 8px;
@@ -85,7 +89,7 @@ header form.search input{
   border-radius: 4px;
 }
 
-header form.search button{
+header form.search button {
   width: 90px;
   height: 37px;
   border-radius: 4px;
@@ -204,7 +208,7 @@ section.about p {
 }
 
 /* SINGLE RECIPE */
-section.recipe-section{
+section.recipe-section {
   width: 100%;
 }
 .single-recipe {
@@ -226,7 +230,7 @@ section.recipe-section{
   flex-direction: row;
   justify-content: flex-end;
 }
-.single-recipe .header .gallery .gallery-preview img{
+.single-recipe .header .gallery .gallery-preview img {
   width: 50px;
   height: 50px;
   margin: 0;
@@ -238,7 +242,7 @@ section.recipe-section{
 
 .single-recipe .header .gallery .gallery-preview img:hover,
 .single-recipe .header .gallery .gallery-preview img.active {
-    opacity: 1;
+  opacity: 1;
 }
 
 .single-recipe h1 {
@@ -288,8 +292,7 @@ section.recipe-section{
   line-height: 28px;
   text-align: justify;
 }
-.search-title{
+.search-title {
   text-align: left;
   margin: 0 0 36px 0;
 }
-

@@ -478,3 +478,68 @@ form.user-edit .user-details{
    justify-content: flex-end;
    margin: 0;
 }
+
+/* USERS */
+.users-list {
+  margin: 0;
+  font-family: helvetica;
+}
+.users-list .title{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.users-list .title h2{
+  margin: 0;
+}
+
+.users-list .title a{
+  width: 140px;
+  padding: 8px 32px;
+  border-radius: 4px;
+  background-color: #6558c3;
+  color: white;
+  border: none;
+  font-weight: bold;
+  margin: 0 ;
+}
+.main.users {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 64px;
+
+}
+.main.users .user{
+  text-align: left;
+  margin: 0 0 52px 0;
+}
+
+.main.users .user h4{
+  color: #111;
+  font-size: 18px;
+  line-height: 22px;
+
+}
+
+.main.users .user p{
+  color: #777777;
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: normal;
+  margin-top: 4px;
+  margin-bottom: 16px;
+}
+.main.users .user .user-buttons a:first-child{
+  color: #6558c3;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.main.users .user .user-buttons a:last-child{
+  color: #f55a5a;
+  font-weight: bold;
+  font-size: 14px;
+  margin-left: 16px;
+}

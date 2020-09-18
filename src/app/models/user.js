@@ -1,6 +1,7 @@
 const db = require("../config/db");
 const {hash} = require('bcryptjs')
-const crypto = require('crypto')
+const crypto = require('crypto');
+
 
 module.exports = {
     async create(data){
@@ -17,10 +18,21 @@ module.exports = {
                 data.name,
                 data.email,
                 password,
-                data.admin
+                data.admin ? data.admin : false
             ]
             await db.query(query, values)
             return
+        }
+        catch(err){
+            console.error(err)
+        }
+    },
+
+    async all(){
+        try{
+            const query =`
+            SELECT name, email, is_admin FROM users`
+            return await db.query(query)
         }
         catch(err){
             console.error(err)

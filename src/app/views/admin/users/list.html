@@ -1,0 +1,22 @@
+{% extends 'admin.html' %}
+{% block content %}
+    <div class="users-list">
+        <div class="title">
+            <h2>Usuários</h2>
+            <a href="./users/create">Novo</a>
+        </div>
+        <section class="main users">
+            {% for user in users %}
+                <div class="user">
+                    <h4>{{user.name}}</h4>
+                    <p>{{user.email}}</p>
+                    <div class="user-buttons">
+                        <a href="./users/{{user.id}}/edit">Editar</a>
+                        <a href="./users/{{user.id}}/edit">Remover</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </section>
+    </div>
+
+{% endblock content %}

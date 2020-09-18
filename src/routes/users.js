@@ -5,6 +5,8 @@ const Users = require('../app/controllers/users')
 routes.get('/admin/users/create', Users.create)
 routes.get('/admin/users/1', Users.show)
 routes.post('/admin/users', Users.post)
+routes.get('/admin/users', Users.list) //Mostrar a lista de usuários cadastrados
+
 
 // // Rotas de perfil de um usuário logado
 // routes.get('/admin/profile', ProfileController.index) // Mostrar o formulário com dados do usuário logado
