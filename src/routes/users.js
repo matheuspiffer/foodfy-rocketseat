@@ -1,11 +1,17 @@
 const express = require('express')
 const routes = express.Router()
 const Users = require('../app/controllers/users')
+const Session = require('../app/controllers/session')
 
 routes.get('/admin/users/create', Users.create)
-routes.get('/admin/users/1', Users.show)
+routes.get('/admin/users/:id/edit', Users.show)
 routes.post('/admin/users', Users.post)
 routes.get('/admin/users', Users.list) //Mostrar a lista de usuários cadastrados
+routes.put('/admin/users', Users.update)
+routes.delete('/admin/users', Users.delete)
+
+//login/logout
+routes.get('/admin/login',Session.loginForm)
 
 
 // // Rotas de perfil de um usuário logado
