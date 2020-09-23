@@ -1,0 +1,40 @@
+html,
+body{
+    min-height: 100vh;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+.login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 500px;
+   margin: 0 auto;
+
+}
+
+.logo {
+    margin-top: 24px;
+    margin-bottom: 146px;
+}
+.form-login{
+    width: 100%;
+}
+.form-login h1 {
+    text-align: center;
+}
+
+.item label {
+    font-size: 16px;
+    font-family: Helvetica;
+    color: #111111;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.item label,
+.item input {
+    display: block;
+    width: 100%;
+}
