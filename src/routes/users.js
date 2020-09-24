@@ -12,7 +12,7 @@ routes.delete('/admin/users', Users.delete)
 
 //login/logout
 routes.get('/admin/login',Session.loginForm)
-
+routes.get('/admin/forgot-password',Session.forgotForm)
 
 // // Rotas de perfil de um usuário logado
 // routes.get('/admin/profile', ProfileController.index) // Mostrar o formulário com dados do usuário logado
