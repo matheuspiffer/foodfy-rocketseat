@@ -1,7 +1,6 @@
 const db = require("../config/db");
 const { hash } = require("bcryptjs");
 const crypto = require("crypto");
-const { update } = require("../controllers/users");
 
 module.exports = {
   async create(data) {
@@ -12,16 +11,18 @@ module.exports = {
                 email,
                 password,
                 is_admin
-            ) VALUES ($1, $2, $3, $4)`;
-      const password = crypto.randomBytes(10).toString("hex");
+            ) VALUES ($1, $2, $3, $4)
+            RETURNING ID, email`;
+      ;
+      const password = Math.random()*10
       const values = [
         data.name,
         data.email,
         password,
         data.is_admin ? data.is_admin : false,
       ];
-      await db.query(query, values);
-      return;
+      return await db.query(query, values);
+      ;
     } catch (err) {
       console.error(err);
     }
@@ -35,10 +36,18 @@ module.exports = {
       console.error(err);
     }
   },
-  async find(id) {
+  async findOne(filters) {
     try {
-      const query = `SELECT * FROM users WHERE id = $1`;
-      return await db.query(query, [id]);
+      let query = "SELECT * FROM users";
+      Object.keys(filters).map((key) => {
+        query = `${query}
+                ${key}`;
+
+        Object.keys(filters[key]).map((field) => {
+          query = `${query} ${field} = '${filters[key][field]}'`;
+        });
+      });
+      return await db.query(query);
     } catch (err) {
       console.error(err);
     }
@@ -46,28 +55,27 @@ module.exports = {
   async update(id, fields) {
     try {
       let query = `UPDATE users SET`;
-      Object.keys(fields).map((key, index, array) =>{
-          if(index + 1 < array.length){
-              query = `${query}
-              ${key} = '${fields[key]}',`
-          } else {
-              query = `${query}
+      Object.keys(fields).map((key, index, array) => {
+        if (index + 1 < array.length) {
+          query = `${query}
+              ${key} = '${fields[key]}',`;
+        } else {
+          query = `${query}
               ${key} = '${fields[key]}'
-              WHERE id = ${id}`
-          }
-      })
+              WHERE id = ${id}`;
+        }
+      });
       await db.query(query);
       return;
     } catch (err) {
       console.error(err);
     }
   },
-  async delete(id){
-      try{
-        return
-      }
-      catch(err){
-          console.error(err)
-      }
-  }
+  async delete(id) {
+    try {
+      return;
+    } catch (err) {
+      console.error(err);
+    }
+  },
 };

@@ -2,6 +2,7 @@ const express = require('express')
 const routes = express.Router()
 const Users = require('../app/controllers/users')
 const Session = require('../app/controllers/session')
+const sessionValidator = require('../app/validators/session')
 
 routes.get('/admin/users/create', Users.create)
 routes.get('/admin/users/:id/edit', Users.show)
@@ -13,6 +14,8 @@ routes.delete('/admin/users', Users.delete)
 //login/logout
 routes.get('/admin/login',Session.loginForm)
 routes.get('/admin/forgot-password',Session.forgotForm)
+routes.post('/admin/login',sessionValidator.login ,Session.login)
+routes.post('/admin/new-password',Session.reset)
 
 // // Rotas de perfil de um usuário logado
 // routes.get('/admin/profile', ProfileController.index) // Mostrar o formulário com dados do usuário logado

@@ -1,4 +1,6 @@
 const User = require("../models/user");
+const mailer = require("../../lib/mailer");
+const crypto = require("crypto");
 module.exports = {
   create(req, res) {
     try {
@@ -10,9 +12,8 @@ module.exports = {
   async show(req, res) {
     try {
       const { id } = req.params;
-      const results = await User.find(id);
+      const results = await User.find({ where: { id } });
       const user = results.rows[0];
-      console.log(user);
       return res.render("./admin/users/edit", { user });
     } catch (err) {
       console.error(err);
@@ -20,10 +21,36 @@ module.exports = {
   },
   async post(req, res) {
     try {
-      await User.create(req.body);
-      return res.redirect("/admin/users");
+      const user = await User.create(req.body);
+      console.log(user.rows[0])
+      const token = crypto.randomBytes(20).toString("hex");
+      let now = new Date();
+      now = now.setHours(now.getHours() + 1);
+      await User.update(user.rows[0].id, {
+        reset_token: token,
+        reset_token_expires: now,
+      });
+      await mailer.sendMail({
+        to: user.rows[0].email,
+        from: "No-reply@foodfy.com.br",
+        subject: "Bem-vindo ao Foodfy",
+        html: `<h2>Bem-vindo</h2>
+        <p>clique no link abaixo para criar sua senha e e contribuir com a mais deliciosas receitas</p>
+        <p>
+          <a href="https://localhost:3000/users/new-password?token=${token}" target="_blank">
+            Cadastrar senha
+          </a>
+        </p>`,
+      });
+
+      return res.render("./admin/users/register", {
+        success: "Usuário cadastrado com sucesso!",
+      });
     } catch (err) {
-      console.error(err);
+      return res.render("./admin/users/register", {
+        user: req.body,
+        error: "Erro inesperado, por favor tente novamente",
+      });
     }
   },
   async list(req, res) {
@@ -49,7 +76,7 @@ module.exports = {
   async delete(req, res) {
     try {
       const { id } = req.body;
-      await User.delete(id)
+      await User.delete(id);
     } catch (err) {
       console.error(err);
     }
