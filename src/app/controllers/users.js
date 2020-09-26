@@ -22,7 +22,6 @@ module.exports = {
   async post(req, res) {
     try {
       const user = await User.create(req.body);
-      console.log(user.rows[0])
       const token = crypto.randomBytes(20).toString("hex");
       let now = new Date();
       now = now.setHours(now.getHours() + 1);
