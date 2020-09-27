@@ -3,6 +3,7 @@
   height: 80px;
 }
 .nav-admin {
+  position: relative;
   width: 90%;
   max-width: 940px;
   text-align: center;
@@ -20,6 +21,23 @@
 }
 .nav-admin a:first-child {
   margin-right: 32px;
+}
+.nav-admin form {
+  margin: 0 !important;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+.nav-admin form button{
+  background-color: transparent;
+  color: #ffffff;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 15px;
+  margin: 0;
+  padding: 8px;
+  cursor: pointer;
 }
 .main {
   display: flex;

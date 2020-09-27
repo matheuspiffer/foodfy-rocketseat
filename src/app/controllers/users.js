@@ -12,7 +12,7 @@ module.exports = {
   async show(req, res) {
     try {
       const { id } = req.params;
-      const results = await User.find({ where: { id } });
+      const results = await User.findOne({ where: { id } });
       const user = results.rows[0];
       return res.render("./admin/users/edit", { user });
     } catch (err) {

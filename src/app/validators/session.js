@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const { compare } = require("bcryptjs");
+const { forgotForm } = require("../controllers/session");
 
 module.exports = {
   async login(req, res, next) {
@@ -11,13 +12,24 @@ module.exports = {
         user: req.body,
         error: "usuário não encontrado",
       });
-    //const passed = await compare(password, user.rows[0].password)
-    if ((password =! user.rows[0].password)) {
+    const passed = await compare(password, user.rows[0].password)
+    if (!passed) {
       return res.render("admin/session/login", {
         user: req.body,
         error: "Senha incorreta",
       });
     }
+    req.user = user.rows[0];
+    next();
+  },
+  async forgot(req, res, next) {
+    let { email } = req.body;
+    let user = await User.findOne({ where: { email } });
+    if (!user)
+      return res.render("admin/session/forgot-password", {
+        user: req.body,
+        error: "Email não encontrado",
+      });
     req.user = user.rows[0];
     next();
   },

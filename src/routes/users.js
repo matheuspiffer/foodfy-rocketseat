@@ -1,22 +1,27 @@
-const express = require('express')
-const routes = express.Router()
-const Users = require('../app/controllers/users')
-const Session = require('../app/controllers/session')
-const sessionValidator = require('../app/validators/session')
-const userValidator = require('../app/validators/user')
+const express = require("express");
+const routes = express.Router();
+const Users = require("../app/controllers/users");
+const Session = require("../app/controllers/session");
+const sessionValidator = require("../app/validators/session");
+const userValidator = require("../app/validators/user");
 
-routes.get('/admin/users/create', Users.create)
-routes.get('/admin/users/:id/edit', Users.show)
-routes.post('/admin/users', userValidator.post, Users.post)
-routes.get('/admin/users', Users.list) //Mostrar a lista de usuários cadastrados
-routes.put('/admin/users', Users.update)
-routes.delete('/admin/users', Users.delete)
+routes.get("/admin/users/create", Users.create);
+routes.get("/admin/users/:id/edit", Users.show);
+routes.post("/admin/users", userValidator.post, Users.post);
+routes.get("/admin/users", Users.list); //Mostrar a lista de usuários cadastrados
+routes.put("/admin/users", Users.update);
+routes.delete("/admin/users", Users.delete);
 
 //login/logout
-routes.get('/admin/login',Session.loginForm)
-routes.get('/admin/forgot-password',Session.forgotForm)
-routes.post('/admin/login',sessionValidator.login ,Session.login)
-routes.post('/admin/new-password',Session.reset)
+routes.get("/admin/login", Session.loginForm);
+routes.post("/admin/login", sessionValidator.login, Session.login);
+routes.post("/admin/logout", Session.logout);
+
+//session
+routes.get("/admin/forgot-password", Session.forgotForm);
+routes.post('/admin/forgot-password', sessionValidator.forgot, Session.forgot)
+routes.get('admin/new-password', Session.newPasswordForm)
+routes.post("/admin/new-password", Session.reset);
 
 // // Rotas de perfil de um usuário logado
 // routes.get('/admin/profile', ProfileController.index) // Mostrar o formulário com dados do usuário logado
@@ -28,4 +33,4 @@ routes.post('/admin/new-password',Session.reset)
 // routes.put('/admin/users', UserController.put) // Editar um usuário
 // routes.delete('/admin/users', UserController.delete) // Deletar um usuário
 
-module.exports = routes
+module.exports = routes;
