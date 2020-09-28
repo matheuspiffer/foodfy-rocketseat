@@ -1,3 +1,6 @@
+* {
+  font-family: Helvetica;
+}
 .admin-header {
   background-color: #111;
   height: 80px;
@@ -29,9 +32,10 @@
   align-items: center;
   width: 100%;
 }
-.nav-admin form button{
+.nav-admin form button {
   background-color: transparent;
   color: #ffffff;
+  font-family: Helvetica, sans-serif, Arial;
   text-transform: uppercase;
   font-weight: bold;
   font-size: 15px;
@@ -437,53 +441,53 @@ form .user-details .user-button button:last-child {
   cursor: pointer;
 }
 
-.user-field{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 40px;
-    margin-top: 70px;
+.user-field {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 40px;
+  margin-top: 70px;
 }
 
-.user-field .item label{
-    text-align: left;
+.user-field .item label {
+  text-align: left;
 }
-.user-field .item input[type="text"]{
-    height: 50px;
-    border-radius: 4px;
-    margin-top: 10px;
+.user-field .item input[type="text"] {
+  height: 50px;
+  border-radius: 4px;
+  margin-top: 10px;
 }
-.user-field .item input:focus{
-    outline: none;
+.user-field .item input:focus {
+  outline: none;
 }
-.user-field .item:last-child{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.user-field .item input[type="checkbox"]{
-    margin: 0;
-    width: 15px;
-    height: 15px;
+.user-field .item:last-child {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
-.user-field .item:last-child label{
-    margin-left: 8px;
+.user-field .item input[type="checkbox"] {
+  margin: 0;
+  width: 15px;
+  height: 15px;
 }
 
-form.user-delete{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 0;
+.user-field .item:last-child label {
+  margin-left: 8px;
+}
+
+form.user-delete {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0;
 }
 form.user-delete button,
-form.user-delete h1{
-    margin: 0;
+form.user-delete h1 {
+  margin: 0;
 }
 
-form.user-delete button{
-    width: 140px;
+form.user-delete button {
+  width: 140px;
   height: 32px;
   border-radius: 4px;
   background-color: #dc4747;
@@ -492,9 +496,9 @@ form.user-delete button{
   font-weight: bold;
   cursor: pointer;
 }
-form.user-edit .user-details{
-   justify-content: flex-end;
-   margin: 0;
+form.user-edit .user-details {
+  justify-content: flex-end;
+  margin: 0;
 }
 
 /* USERS */
@@ -502,18 +506,18 @@ form.user-edit .user-details{
   margin: 0;
   font-family: helvetica;
 }
-.users-list .title{
+.users-list .title {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   width: 100%;
 }
-.users-list .title h2{
+.users-list .title h2 {
   margin: 0;
 }
 
-.users-list .title a{
+.users-list .title a {
   width: 140px;
   padding: 8px 32px;
   border-radius: 4px;
@@ -521,27 +525,25 @@ form.user-edit .user-details{
   color: white;
   border: none;
   font-weight: bold;
-  margin: 0 ;
+  margin: 0;
 }
 .main.users {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   margin-top: 64px;
-
 }
-.main.users .user{
+.main.users .user {
   text-align: left;
   margin: 0 0 52px 0;
 }
 
-.main.users .user h4{
+.main.users .user h4 {
   color: #111;
   font-size: 18px;
   line-height: 22px;
-
 }
 
-.main.users .user p{
+.main.users .user p {
   color: #777777;
   font-size: 14px;
   line-height: 17px;
@@ -549,13 +551,13 @@ form.user-edit .user-details{
   margin-top: 4px;
   margin-bottom: 16px;
 }
-.main.users .user .user-buttons a:first-child{
+.main.users .user .user-buttons a:first-child {
   color: #6558c3;
   font-weight: bold;
   font-size: 14px;
 }
 
-.main.users .user .user-buttons a:last-child{
+.main.users .user .user-buttons a:last-child {
   color: #f55a5a;
   font-weight: bold;
   font-size: 14px;

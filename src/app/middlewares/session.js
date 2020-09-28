@@ -4,7 +4,7 @@ function onlyUsers(req, res, next) {
 }
 
 function onlyAdmins(req, res, next) {
-  if (!req.session.userAdmin) return res.redirect("/admin");
+  if (!req.session.userAdmin) return res.redirect("/admin/profile");
   next();
 }
 

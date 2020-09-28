@@ -5,11 +5,9 @@
     </a>
     <a href="/admin/recipes">Receitas</a>
     <a href="/admin/chefs">Chefs</a>
-    {% if req.session.userAdmin %}
-      <a href="/admin/users">Usuários</a>
-      {%endif%}
-      <form action="/admin/logout" method="post">
-        <button type="submit">Sair</button>
-      </form>
-    </div>
-  </header>
+    <a href="/admin/users">Usuários</a>
+    <form action="/admin/logout" method="post">
+      <button type="submit">Sair</button>
+    </form>
+  </div>
+</header>

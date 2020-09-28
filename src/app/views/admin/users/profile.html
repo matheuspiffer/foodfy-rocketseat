@@ -1,0 +1,29 @@
+{% extends 'admin.html' %}
+{% block title %}
+    <title>Registrar Usuário</title>
+{% endblock %}
+{% block content %}
+    <form class="form" action='/admin/profile?_method=PUT' method='POST'>
+        <section class="user-details">
+            <h1>Bem-vindo {{user.name}}</h1>
+            <div class="user-button">
+                <button type="submit">Salvar</button>
+            </div>
+        </section>
+        <section class="user-field">
+            <div class="item">
+                <label>Nome</label>
+                <input type="text" name="name" placeholder="Digite o nome completo" value="{{user.name}}" required/>
+            </div>
+            <div class="item">
+                <label>Email</label>
+                <input type="text" name="email" placeholder="Digite o email" value="{{user.email}}" required/>
+            </div>
+            <div class="item">
+                <input type="checkbox" name="is_admin"/>
+                <label for="admin">Administrador</label>
+            </div>
+        </section>
+    </form>
+
+{% endblock content %}

@@ -15,7 +15,7 @@ module.exports = {
   login(req, res) {
     req.session.userId = req.user.id;
     req.session.userAdmin = req.user.is_admin;
-    console.log(req.session);
+    console.log(req.session.userAdmin);
     return res.redirect("/admin");
   },
   logout(req, res) {
