@@ -420,7 +420,7 @@ form .user-details h1 {
 form .user-details .user-button {
   margin: 0;
 }
-form .user-details .user-button button:first-child {
+form .user-details .user-button button[type="submit"] {
   width: 140px;
   height: 32px;
   border-radius: 4px;
@@ -430,7 +430,7 @@ form .user-details .user-button button:first-child {
   font-weight: bold;
   cursor: pointer;
 }
-form .user-details .user-button button:last-child {
+form .user-details .user-button button[type="button"] {
   width: 140px;
   height: 32px;
   border-radius: 4px;
@@ -451,7 +451,8 @@ form .user-details .user-button button:last-child {
 .user-field .item label {
   text-align: left;
 }
-.user-field .item input[type="text"] {
+.user-field .item input[type="text"],
+.user-field .item input[type="password"] {
   height: 50px;
   border-radius: 4px;
   margin-top: 10px;
@@ -459,7 +460,7 @@ form .user-details .user-button button:last-child {
 .user-field .item input:focus {
   outline: none;
 }
-.user-field .item:last-child {
+.user-field .item.adminbox {
   display: flex;
   flex-direction: row;
   align-items: center;
