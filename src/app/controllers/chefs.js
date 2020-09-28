@@ -85,11 +85,9 @@ module.exports = {
     const { id } = req.params;
     const results = await Chef.find(id);
     const chef = results.rows[0]
-    console.log(chef)
     return res.render("admin/chefs/edit", { chef });
   },
   async put(req, res) {
-    console.log(req.body);
     const results = await Chef.update(req.body)
     const id = results.rows[0].id
       return res.redirect("chefs/" + id);

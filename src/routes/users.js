@@ -4,11 +4,12 @@ const Users = require("../app/controllers/users");
 const Session = require("../app/controllers/session");
 const sessionValidator = require("../app/validators/session");
 const userValidator = require("../app/validators/user");
+const { onlyAdmins } = require("../app/middlewares/session");
 
-routes.get("/admin/users/create", Users.create);
-routes.get("/admin/users/:id/edit", Users.show);
-routes.post("/admin/users", userValidator.post, Users.post);
-routes.get("/admin/users", Users.list); //Mostrar a lista de usuários cadastrados
+routes.get("/admin/users/create", onlyAdmins, Users.create);
+routes.get("/admin/users/:id/edit", onlyAdmins, Users.show);
+routes.post("/admin/users", onlyAdmins, userValidator.post, Users.post);
+routes.get("/admin/users", onlyAdmins, Users.list); //Mostrar a lista de usuários cadastrados
 routes.put("/admin/users", Users.update);
 routes.delete("/admin/users", Users.delete);
 
@@ -19,13 +20,13 @@ routes.post("/admin/logout", Session.logout);
 
 //session
 routes.get("/admin/forgot-password", Session.forgotForm);
-routes.post('/admin/forgot-password', sessionValidator.forgot, Session.forgot)
-routes.get('admin/new-password', Session.newPasswordForm)
-routes.post("/admin/new-password", Session.reset);
+routes.post("/admin/forgot-password", sessionValidator.forgot, Session.forgot);
+routes.get("/admin/new-password", Session.newPasswordForm);
+routes.post("/admin/new-password", sessionValidator.reset, Session.reset);
 
 // // Rotas de perfil de um usuário logado
 // routes.get('/admin/profile', ProfileController.index) // Mostrar o formulário com dados do usuário logado
-// routes.put('/admin/profile', ProfileController.put)// Editar o usuário logado
+// routes.put('/admin/profile', ProfileController.put)// Editar o usuário logado"
 
 // // Rotas que o administrador irá acessar para gerenciar usuários
 // routes.get('/admin/users', UserController.list) //Mostrar a lista de usuários cadastrados

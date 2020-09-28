@@ -1,13 +1,13 @@
 const User = require("../models/user");
 const crypto = require("crypto");
 const mailer = require("../../lib/mailer");
-
+const { hash } = require("bcryptjs");
 module.exports = {
   loginForm(req, res) {
     return res.render("admin/session/login");
   },
   newPasswordForm(req, res) {
-    return res.render("admin/sesion/new-password", { token: req.query.token });
+    return res.render("admin/session/new-password", { token: req.query.token });
   },
   forgotForm(req, res) {
     return res.render("admin/session/forgot-password");
@@ -15,7 +15,7 @@ module.exports = {
   login(req, res) {
     req.session.userId = req.user.id;
     req.session.userAdmin = req.user.is_admin;
-    console.log(req.session.userId);
+    console.log(req.session);
     return res.redirect("/admin");
   },
   logout(req, res) {
@@ -39,7 +39,7 @@ module.exports = {
         html: `<h2>Bem-vindo</h2>
         <p>clique no link abaixo para redefinir sua senha e contribuir com a mais deliciosas receitas</p>
         <p>
-          <a href="https://localhost:3000/admin/new-password?token=${token}" target="_blank">
+          <a href="localhost:3000/admin/new-password?token=${token}" target="_blank">
             Redefenir senha
           </a>
         </p>`,
@@ -72,13 +72,13 @@ module.exports = {
       });
       //avisa o usuário senha foi alterada
 
-      return res.render("session/login", {
+      return res.render("admin/session/login", {
         user: req.body,
         success: "Senha atualizada, faça o login",
       });
     } catch (err) {
       console.error(err);
-      return res.render("session/password-reset", {
+      return res.render("admin/session/new-password", {
         error: "Erro inesperado, tente novamente",
         token,
       });

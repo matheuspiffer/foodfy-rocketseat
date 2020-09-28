@@ -113,12 +113,9 @@ module.exports = {
     }
     if (req.body.removed_files) {
       const removedFiles = req.body.removed_files.split(",");
-      console.log(removedFiles);
       const lastIndex = removedFiles.length - 1;
       removedFiles.splice(lastIndex, 1);
-      console.log(removedFiles);
       const removedFilesPromises = removedFiles.map((id) => {
-        console.log(id);
         File.delete(id);
       });
       await Promise.all(removedFilesPromises);

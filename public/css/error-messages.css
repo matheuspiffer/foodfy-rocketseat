@@ -11,9 +11,13 @@
   padding: 16px;
   position: absolute;
   width: 345px;
+  text-align: center;
+  align-items: center;
   height: 85px;
   color: white;
+  font-weight: bold;
   top: 20px;
+  border-radius: 4px;
   right: 20px;
   opacity: 1;
   animation: hidemessage 0.4s 5s ease-out forwards;

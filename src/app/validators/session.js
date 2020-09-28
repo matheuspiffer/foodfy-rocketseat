@@ -1,25 +1,28 @@
 const User = require("../models/user");
 const { compare } = require("bcryptjs");
-const { forgotForm } = require("../controllers/session");
 
 module.exports = {
   async login(req, res, next) {
     let { email, password } = req.body;
-    let user = await User.findOne({ where: { email } });
+    const user = await User.findOne({ where: { email } });
 
     if (!user)
       return res.render("admin/session/login", {
         user: req.body,
         error: "usuário não encontrado",
       });
-    const passed = await compare(password, user.rows[0].password)
+    // console.log(password, user.rows[0].password)
+    const passed = await compare(password, user.rows[0].password);
     if (!passed) {
       return res.render("admin/session/login", {
         user: req.body,
         error: "Senha incorreta",
       });
     }
-    req.user = user.rows[0];
+    req.user = {
+      id: user.rows[0].id,
+      is_admin: user.rows[0].is_admin,
+    };
     next();
   },
   async forgot(req, res, next) {
@@ -38,7 +41,7 @@ module.exports = {
     const { email, password, passwordRepeat, token } = req.body;
     const user = await User.findOne({ where: { email } });
     if (!user)
-      return res.render("session/password-reset", {
+      return res.render("admin/session/new-password", {
         user: req.body,
         token,
         error: "usuário não encontrado",
@@ -46,15 +49,16 @@ module.exports = {
     //ver se a senha bate
 
     if (password != passwordRepeat) {
-      return res.render("session/password-reset", {
+      return res.render("admin/session/new-password", {
         error: "As senhas não são iguais",
         token,
         user: req.body,
       });
     }
     //verificar se o token bate
-    if (token != user.reset_token)
-      return res.render("session/password-reset", {
+    console.log(token, user.rows[0].reset_token);
+    if (token != user.rows[0].reset_token)
+      return res.render("admin/session/forgot-password", {
         user: req.body,
         token,
         error: "Token inválido, solicite uma nova recuperação de senha",
@@ -63,14 +67,14 @@ module.exports = {
     //verificar se o token nao expirou
     let now = new Date();
     now = now.setHours(now.getHours());
-    if (now > user.reset_token_expires)
-      return res.render("session/password-reset", {
+    if (now > user.rows[0].reset_token_expires)
+      return res.render("admin/session/forgot-password", {
         user: req.body,
         token,
         error: "Token expirado, solicite uma nova recuperação de senha",
       });
 
-    req.user = user;
+    req.user = user.rows[0];
     next();
   },
 };

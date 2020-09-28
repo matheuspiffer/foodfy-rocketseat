@@ -42,7 +42,6 @@ module.exports = {
       Object.keys(filters).map((key) => {
         query = `${query}
                 ${key}`;
-
         Object.keys(filters[key]).map((field) => {
           query = `${query} ${field} = '${filters[key][field]}'`;
         });
