@@ -1,6 +1,7 @@
 CREATE TABLE "recipes" (
   "id" SERIAL PRIMARY KEY,
   "chef_id" int,
+  "user_id" int,
   "image" text,
   "title" text,
   "ingredients" text[],
@@ -11,6 +12,7 @@ CREATE TABLE "recipes" (
 );
 CREATE TABLE "chefs" (
   "id" SERIAL PRIMARY KEY,
+  "user_id" int,
   "name" text,
   "avatar_url" text,
   "created_at" timestamp DEFAULT (now())
@@ -57,7 +59,8 @@ CREATE TABLE "users" (
   "created_at" timestamp DEFAULT (now()),
   "updated_at" timestamp DEFAULT (now())
 );
-
+ALTER TABLE "recipes" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
+ALTER TABLE "chefs" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 
 CREATE TABLE "session" (
   "sid" varchar NOT NULL COLLATE "default",
