@@ -20,14 +20,16 @@ module.exports = {
       const query = `
             INSERT INTO recipes(
                 chef_id,
+                user_id,
                 title,
                 ingredients,
                 preparation,
                 information
-            ) VALUES ($1, $2, $3, $4, $5)
+            ) VALUES ($1, $2, $3, $4, $5, $6)
             RETURNING ID`;
       const values = [
         data.chef_id,
+        data.userId,
         data.title,
         data.ingredients,
         data.preparation,
@@ -85,16 +87,13 @@ module.exports = {
     ];
     return db.query(query, values);
   },
-  delete(id, callback) {
-    db.query(`DELETE FROM recipes WHERE id = $1`, [id], (err, results) => {
-      if (err) throw "Database error " + err;
-      callback();
-    });
+  delete(id) {
+    return db.query(`DELETE FROM recipes WHERE id = $1`, [id]);
   },
 
   search(filter) {
     try {
-      console.log(filter)
+      console.log(filter);
       let query = `SELECT recipes.*, 
                   chefs.name AS chef_name
                   FROM recipes

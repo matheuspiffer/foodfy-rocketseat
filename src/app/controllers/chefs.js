@@ -42,10 +42,11 @@ module.exports = {
 
       const filesResults = await Promise.all(filesPromises);
       const fileId = filesResults[0].rows[0].id;
-
+      const userId = req.session.userId;
       const data = {
         ...req.body,
         fileId,
+        userId,
       };
       await Chef.create(data);
 
@@ -68,30 +69,29 @@ module.exports = {
         : "",
     };
     results = await Recipe.findByAuthor(id);
-    const recipesPromise = results.rows.map(async recipe=>{
+    const recipesPromise = results.rows.map(async (recipe) => {
       const recipePath = await File.findByRecipe(recipe.id);
-        const path = recipePath.rows[0].path_file;
-        recipe.path = `${req.protocol}://${req.headers.host}${path.replace(
-          "public",
-          ""
-        )}`;
-        return recipe;
+      const path = recipePath.rows[0].path_file;
+      recipe.path = `${req.protocol}://${req.headers.host}${path.replace(
+        "public",
+        ""
+      )}`;
+      return recipe;
     });
-    const recipes = await Promise.all(recipesPromise)
-  
+    const recipes = await Promise.all(recipesPromise);
+
     return res.render("admin/chefs/show", { chef, recipes });
   },
   async edit(req, res) {
     const { id } = req.params;
     const results = await Chef.find(id);
-    const chef = results.rows[0]
+    const chef = results.rows[0];
     return res.render("admin/chefs/edit", { chef });
   },
   async put(req, res) {
-    const results = await Chef.update(req.body)
-    const id = results.rows[0].id
-      return res.redirect("chefs/" + id);
-
+    const results = await Chef.update(req.body);
+    const id = results.rows[0].id;
+    return res.redirect("chefs/" + id);
   },
   delete(req, res) {
     const { id } = req.body;

@@ -1,5 +1,8 @@
 const User = require("../models/user");
+const Recipe = require("../models/recipe");
+const File = require("../models/file");
 const { compare } = require("bcryptjs");
+
 module.exports = {
   async post(req, res, next) {
     const { email } = req.body;
@@ -31,5 +34,34 @@ module.exports = {
       });
     }
     next();
+  },
+  async userRecipe(req, res, next) {
+    try {
+      const recipeId = req.params.id ? req.params.id : req.body.id;
+      let results = await Recipe.find(recipeId);
+      const recipe = results.rows[0];
+      const recipeUserId = recipe ? recipe.user_id
+        : req.body.recipe_user_id;
+      let sessionUserId = req.session.userId;
+      results = await File.findByRecipe(recipeId);
+      const files = results.rows.map((file) => {
+        return {
+          ...file,
+          path_file: `${req.protocol}://${
+            req.headers.host
+          }${file.path_file.replace("public", "")}`,
+        };
+      });
+      if (sessionUserId != recipeUserId) {
+        return res.render("admin/recipes/show", {
+          item: recipe,
+          files,
+          error: "Você não pode editar receitas de outros usuários",
+        });
+      }
+      next();
+    } catch (err) {
+      console.error(err);
+    }
   },
 };

@@ -17,11 +17,17 @@ module.exports = {
     try {
       const query = `
          INSERT INTO chefs(
+             user_id,  
              name,
              created_at,
              file_id
-         ) VALUES ($1, $2, $3)`;
-      const values = [data.name, date(Date.now()).iso, data.fileId];
+         ) VALUES ($1, $2, $3, $4)`;
+      const values = [
+        data.userId,
+        data.name,
+        date(Date.now()).iso,
+        data.fileId,
+      ];
       return db.query(query, values);
     } catch (err) {
       console.error(err);
@@ -37,7 +43,7 @@ module.exports = {
         LEFT JOIN files ON (chefs.file_id = files.id)
         WHERE chefs.id = $1
         GROUP BY chefs.id, files.path`;
-    return db.query(query, [id])
+    return db.query(query, [id]);
   },
   chefSelectOption(callback) {
     db.query(`SELECT name, id FROM chefs`, (err, results) => {
@@ -53,7 +59,7 @@ module.exports = {
         WHERE id = $3
         RETURNING ID`;
     const values = [data.name, data.avatar_url, data.id];
-    return db.query(query, values)
+    return db.query(query, values);
   },
   delete(id, callback) {
     db.query(`DELETE FROM chefs WHERE id = $1`, [id], (err, results) => {

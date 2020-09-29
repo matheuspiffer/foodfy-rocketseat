@@ -5,7 +5,7 @@ const SessionController = require("../app/controllers/session");
 const ProfileController = require("../app/controllers/profile");
 const sessionValidator = require("../app/validators/session");
 const userValidator = require("../app/validators/user");
-const { onlyAdmins } = require("../app/middlewares/session");
+const { onlyAdmins, redirectToProfile } = require("../app/middlewares/session");
 
 routes.get("/admin/profile", ProfileController.index); // Mostrar o formulário com dados do usuário logado
 routes.put("/admin/profile", userValidator.update, ProfileController.put); // Editar o usuário logado
@@ -18,9 +18,9 @@ routes.post(
   userValidator.post,
   UsersController.post
 );
-routes.get("/admin/users", onlyAdmins, UsersController.list); //Mostrar a lista de usuários cadastrados
-routes.put("/admin/users", UsersController.update);
-routes.delete("/admin/users", UsersController.delete);
+routes.get("/admin/users", redirectToProfile, onlyAdmins, UsersController.list); //Mostrar a lista de usuários cadastrados
+routes.put("/admin/users", onlyAdmins, UsersController.update);
+routes.delete("/admin/users", onlyAdmins, UsersController.delete);
 
 //login/logout
 routes.get("/admin/login", SessionController.loginForm);

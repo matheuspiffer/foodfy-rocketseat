@@ -41,9 +41,11 @@
             </div>
         {% endfor %}
     {% endif %}
-    <div class="ingredient">
-        <input type="text" name="ingredients[]"/>
-    </div>
+    {% if not item %}
+        <div class="ingredient">
+            <input type="text" name="ingredients[]"/>
+        </div>
+    {% endif %}
 
 </div>
 <button type="button" class="add-ingredient" onclick="Preparation.addIngredient(event)">Adicionar novo ingrediente</button>
@@ -56,9 +58,11 @@
             </div>
         {% endfor %}
     {% endif %}
-    <div class="step">
-        <input type="text" name="preparation[]"/>
-    </div>
+    {% if not item %}
+        <div class="step">
+            <input type="text" name="preparation[]"/>
+        </div>
+    {% endif %}
 
 </div>
 <button type="button" class="add-step" onclick="Preparation.addIngredient(event)">Adicionar novo passo</button>

@@ -39,8 +39,12 @@ module.exports = {
         }
       });
       if (req.files.length == 0) return res.send("Choose at least one image");
-
-      const results = await Recipe.create(req.body);
+      const userId = req.session.userId;
+      const recipe = {
+        ...req.body,
+        userId,
+      };
+      const results = await Recipe.create(recipe);
       const recipeId = results.rows[0].id;
       const filesPromises = req.files.map((file) => {
         return File.create({ ...file, recipeId });
@@ -71,7 +75,6 @@ module.exports = {
           }${file.path_file.replace("public", "")}`,
         };
       });
-      console.log(files);
       return res.render("admin/recipes/show", { item: recipe, files });
     } catch (err) {
       console.error(err);
@@ -124,10 +127,13 @@ module.exports = {
     const id = results.rows[0].id;
     return res.redirect("recipes/" + id);
   },
-  delete(req, res) {
-    const { id } = req.body;
-    Recipe.delete(id, () => {
+  async delete(req, res) {
+    try{
+      const { id } = req.body;
+      await Recipe.delete(id)
       return res.redirect("recipes");
-    });
+    }catch(err){
+      console.error(err)
+    }    
   },
 };

@@ -13,6 +13,7 @@
             <div class="form-fields">
                 {%include 'admin/recipes/fields.html'%}
                 <input type="hidden" value="{{item.id}}" name="id">
+                <input type="hidden" value="{{item.user_id}}" name="recipe_user_id">
             </div>
             <button type="submit">Salvar receita</button>
         </form>

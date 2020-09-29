@@ -45,8 +45,7 @@ CREATE TRIGGER set_timestamp
 BEFORE UPDATE ON recipes
 FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timestamp()
-
-ALTER TABLE "files" ADD FOREIGN KEY ("recipe_id") REFERENCES "recipe_files" ("recipe_id");
+ALTER TABLE "files" ADD "recipe_id" int REFERENCES "recipes" ("id")
 
 CREATE TABLE "users" (
   "id" SERIAL PRIMARY KEY,
@@ -59,8 +58,6 @@ CREATE TABLE "users" (
   "created_at" timestamp DEFAULT (now()),
   "updated_at" timestamp DEFAULT (now())
 );
-ALTER TABLE "recipes" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
-ALTER TABLE "chefs" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 
 CREATE TABLE "session" (
   "sid" varchar NOT NULL COLLATE "default",
@@ -71,3 +68,41 @@ WITH (OIDS=FALSE);
 ALTER TABLE "session" 
 ADD CONSTRAINT "session_pkey" 
 PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+ALTER TABLE "recipes" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
+ALTER TABLE "chefs" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
+
+ALTER TABLE "recipes"
+DROP CONSTRAINT recipes_user_id_fkey,
+ADD CONSTRAINT recipes_user_id_fkey
+FOREIGN KEY ("user_id")
+REFERENCES "users" ("id")
+ON DELETE CASCADE
+
+ALTER TABLE "recipes"
+DROP CONSTRAINT recipes_chef_id_fkey,
+ADD CONSTRAINT recipes_chef_id_fkey
+FOREIGN KEY ("chef_id")
+REFERENCES "chefs" ("id")
+ON DELETE CASCADE
+
+ALTER TABLE "files"
+DROP CONSTRAINT files_recipe_id_fkey,
+ADD CONSTRAINT files_recipe_id_fkey
+FOREIGN KEY ("recipe_id")
+REFERENCES "recipes" ("id")
+ON DELETE CASCADE
+
+  ALTER TABLE "recipe_files"
+  DROP CONSTRAINT recipe_files_recipe_id_fkey,
+  ADD CONSTRAINT recipe_files_recipe_id_fkey
+  FOREIGN KEY ("recipe_id")
+  REFERENCES "recipes" ("id")
+  ON DELETE CASCADE
+
+  ALTER TABLE "recipe_files"
+  DROP CONSTRAINT recipe_files_chef_id_fkey,
+  ADD CONSTRAINT recipe_files_chef_id_fkey
+  FOREIGN KEY ("chef_id")
+  REFERENCES "chefs" ("id")
+  ON DELETE CASCADE
