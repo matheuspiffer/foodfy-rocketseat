@@ -64,4 +64,17 @@ module.exports = {
       console.error(err);
     }
   },
+  async ownAccount(req, res, next){
+    const sessionId = req.session.userId
+    const userId = req.body.id
+    if(sessionId == userId){
+      let results = await User.all();
+      const users = results.rows;
+      return res.render("./admin/users/list", {
+        users,
+        error: "Você não pode deletar sua própria conta",
+      });
+    }
+    next()
+  }
 };

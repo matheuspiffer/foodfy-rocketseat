@@ -1,5 +1,5 @@
 * {
-  font-family: Helvetica;
+  font-family: helvetica;
 }
 .admin-header {
   background-color: #111;
@@ -116,6 +116,7 @@
   color: white;
   border: none;
   font-weight: bold;
+  cursor: pointer;
 }
 .form-details button:focus {
   outline: none;
@@ -507,18 +508,18 @@ form.user-edit .user-details {
   margin: 0;
   font-family: helvetica;
 }
-.users-list .title {
+.title-admin {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   width: 100%;
 }
-.users-list .title h2 {
+.title-admin h2 {
   margin: 0;
 }
 
-.users-list .title a {
+.title-admin a {
   width: 140px;
   padding: 8px 32px;
   border-radius: 4px;
@@ -556,6 +557,7 @@ form.user-edit .user-details {
   color: #6558c3;
   font-weight: bold;
   font-size: 14px;
+  cursor: pointer;
 }
 
 .main.users .user .user-buttons a:last-child {
@@ -563,4 +565,5 @@ form.user-edit .user-details {
   font-weight: bold;
   font-size: 14px;
   margin-left: 16px;
+  cursor: pointer;
 }

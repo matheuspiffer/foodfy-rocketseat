@@ -13,8 +13,7 @@ module.exports = {
                 is_admin
             ) VALUES ($1, $2, $3, $4)
             RETURNING ID, email`;
-      ;
-      const password = Math.random()*10
+      const password = Math.random() * 10;
       const values = [
         data.name,
         data.email,
@@ -22,7 +21,6 @@ module.exports = {
         data.is_admin ? data.is_admin : false,
       ];
       return await db.query(query, values);
-      ;
     } catch (err) {
       console.error(err);
     }
@@ -72,7 +70,7 @@ module.exports = {
   },
   async delete(id) {
     try {
-      return;
+      return db.query(`DELETE FROM users WHERE id = $1`, [id]);
     } catch (err) {
       console.error(err);
     }

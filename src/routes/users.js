@@ -20,7 +20,12 @@ routes.post(
 );
 routes.get("/admin/users", redirectToProfile, onlyAdmins, UsersController.list); //Mostrar a lista de usuários cadastrados
 routes.put("/admin/users", onlyAdmins, UsersController.update);
-routes.delete("/admin/users", onlyAdmins, UsersController.delete);
+routes.delete(
+  "/admin/users",
+  onlyAdmins,
+  userValidator.ownAccount,
+  UsersController.delete
+);
 
 //login/logout
 routes.get("/admin/login", SessionController.loginForm);

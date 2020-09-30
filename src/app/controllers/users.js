@@ -76,6 +76,12 @@ module.exports = {
     try {
       const { id } = req.body;
       await User.delete(id);
+      let results = await User.all();
+      const users = results.rows;
+      return res.render("./admin/users/list", {
+        users,
+        success: "Usuário deletado com sucesso",
+      });
     } catch (err) {
       console.error(err);
     }

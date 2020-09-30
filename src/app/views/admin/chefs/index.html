@@ -3,9 +3,10 @@
     <title>Gerenciador de chefs</title>
 {% endblock %}
 {% block content %}
-    <div class="wrapper">
-        <h1>Gerenciador de Chefs</h1>
-    </div>
+    <div class="title-admin">
+            <h2>Chefs</h2>
+            <a href="./chefs/create">Novo</a>
+        </div>
     <section class="main">
         {% for chef in chefs %}
             <div class="chef-card">
