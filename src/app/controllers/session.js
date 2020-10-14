@@ -25,6 +25,7 @@ module.exports = {
   async forgot(req, res) {
     try {
       const user = req.user;
+      console.log(user)
       const token = crypto.randomBytes(20).toString("hex");
       let now = new Date();
       now = now.setHours(now.getHours() + 1);

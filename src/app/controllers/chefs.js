@@ -2,7 +2,7 @@ const Chef = require("../models/chef");
 const Recipe = require("../models/recipe");
 const File = require("../models/file");
 const { age, date, since } = require("../../lib/utils");
-
+const fs = require("fs");
 module.exports = {
   async index(req, res) {
     try {
@@ -93,10 +93,20 @@ module.exports = {
     const id = results.rows[0].id;
     return res.redirect("chefs/" + id);
   },
-  delete(req, res) {
-    const { id } = req.body;
-    Chef.delete(id, () => {
+  async delete(req, res) {
+    try {
+      const { id } = req.body;
+      const chef = await Chef.find(id);
+      try {
+        fs.unlinkSync(chef.rows[0].avatar);
+      } catch (error) {
+        console.error(error);
+      }
+
+      await Chef.delete(id);
       return res.redirect("chefs");
-    });
+    } catch (err) {
+      console.error(err);
+    }
   },
 };

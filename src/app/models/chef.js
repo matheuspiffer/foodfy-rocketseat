@@ -61,10 +61,7 @@ module.exports = {
     const values = [data.name, data.avatar_url, data.id];
     return db.query(query, values);
   },
-  delete(id, callback) {
-    db.query(`DELETE FROM chefs WHERE id = $1`, [id], (err, results) => {
-      if (err) throw "Database error " + err;
-      callback();
-    });
+  delete(id) {
+    return db.query(`DELETE FROM chefs WHERE id = $1`, [id])
   },
 };

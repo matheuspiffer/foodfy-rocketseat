@@ -28,7 +28,7 @@ module.exports = {
   async forgot(req, res, next) {
     let { email } = req.body;
     let user = await User.findOne({ where: { email } });
-    if (!user)
+    if (!user.rows[0])
       return res.render("admin/session/forgot-password", {
         user: req.body,
         error: "Email não encontrado",

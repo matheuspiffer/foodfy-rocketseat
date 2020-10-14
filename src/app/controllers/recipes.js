@@ -1,6 +1,7 @@
 const Recipe = require("../models/recipe");
 const File = require("../models/file");
 const { age, date, since } = require("../../lib/utils");
+const fs = require("fs");
 
 module.exports = {
   async index(req, res) {
@@ -130,6 +131,14 @@ module.exports = {
   async delete(req, res) {
     try{
       const { id } = req.body;
+      const files = await File.findByRecipe(id);
+      files.rows.map(file=>{
+        try{
+          fs.unlinkSync(file.path_file)
+        }catch(err){
+          console.error(err)
+        }
+      })
       await Recipe.delete(id)
       return res.redirect("recipes");
     }catch(err){
