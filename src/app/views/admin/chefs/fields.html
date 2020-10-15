@@ -3,13 +3,10 @@
     <input type="text" name="name" value="{{chef.name}}"/>
 </div>
 <div class="item">
-    
-    {% if chef.avatar %}
-        <input type="text" value="{{chef.avatar}}"></input>
-    {% endif %}
+
     <div class="avatar-upload">
     <input class="avatar-input" type="file" name="photo" accept="image/*"/>
-    <p>Enviar avatar</p>
+    <p>Novo avatar</p>
     </div>
-
+<input type="hidden" name="file_id" value="{{chef.file_id}}">
 </div>

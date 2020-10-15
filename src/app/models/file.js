@@ -1,6 +1,6 @@
 const db = require("../config/db");
 const recipe = require("./recipe");
-const fs = require('fs')
+const fs = require("fs");
 
 module.exports = {
   create({ filename, path, recipeId }) {
@@ -52,15 +52,26 @@ module.exports = {
     WHERE files.id = $1`;
     return db.query(query, [id]);
   },
-   async delete(id) {
+  async delete(id) {
     try {
       const results = await db.query(`SELECT * FROM files WHERE id =$1`, [id]);
       const file = results.rows[0];
-      console.log(file.path)
+      console.log(file.path);
       fs.unlinkSync(file.path);
       return db.query(`DELETE FROM files WHERE id = $1`, [id]);
     } catch (err) {
       console.error(err);
     }
+  },
+  async edit({ filename, path, id }) {
+    const query = `
+    UPDATE files SET
+    name=($1),
+    path=($2)
+    WHERE id = $3
+    RETURNING ID`;
+    const values = [filename, path, id];
+    console.log(values)
+    return db.query(query, values);
   },
 };

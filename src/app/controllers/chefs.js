@@ -7,6 +7,7 @@ module.exports = {
   async index(req, res) {
     try {
       const results = await Chef.all();
+      console.log(results.rows);
       let chefs = results.rows.map((chef) => {
         return {
           ...chef,
@@ -31,7 +32,7 @@ module.exports = {
     try {
       const keys = Object.keys(req.body);
       keys.forEach((key) => {
-        if (!req.body[key]) {
+        if (!req.body[key] && req.body[key] == "file_id") {
           return res.send("please fill the " + key + " field");
         }
       });
@@ -89,9 +90,26 @@ module.exports = {
     return res.render("admin/chefs/edit", { chef });
   },
   async put(req, res) {
-    const results = await Chef.update(req.body);
-    const id = results.rows[0].id;
-    return res.redirect("chefs/" + id);
+    try {
+      let results = await Chef.find(req.body.id);
+      const { file_id, avatar } = results.rows[0];
+      if (req.files) {
+        try {
+          fs.unlinkSync(avatar);
+          const filesPromises = req.files.map((file) => {
+            return File.edit({ ...file, id: file_id });
+          });
+          await Promise.all(filesPromises);
+        } catch (err) {
+          console.error(err);
+        }
+      }
+      results = await Chef.update(req.body);
+      const id = results.rows[0].id;
+      return res.redirect("chefs/" + id);
+    } catch (err) {
+      console.error(err);
+    }
   },
   async delete(req, res) {
     try {
