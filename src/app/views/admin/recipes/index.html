@@ -4,21 +4,30 @@
 {% endblock %}
 {% block content %}
     <div class="title-admin">
-            <h2>Receitas</h2>
-            <a href="./recipes/create">Nova</a>
-        </div>
-    <section class="main-recipes">
-        {% for item in items %}
-            <div class="recipe-card">
-                <div class="recipe-card-image">
-                    <img src="{{item.path}}"/>
-                </div>
-                <div class="recipe-card-details">
-                    <h4>{{item.title}}</h4>
-                    <p>{{item.chef_name}}</p>
-                    <a href="/admin/recipes/{{item.id}}">Visualizar</a>
-                </div>
+        <h2>Receitas</h2>
+        <a href="./recipes/create">Nova</a>
+    </div>
+    {% if error %}
+        <section>
+            <div class="error-message">
+                {{error}}
             </div>
-        {% endfor %}
-    </section>
+        </section>
+        {%else%}
+
+        <section class="main-recipes">
+            {% for item in items %}
+                <div class="recipe-card">
+                    <div class="recipe-card-image">
+                        <img src="{{item.path}}"/>
+                    </div>
+                    <div class="recipe-card-details">
+                        <h4>{{item.title}}</h4>
+                        <p>{{item.chef_name}}</p>
+                        <a href="/admin/recipes/{{item.id}}">Visualizar</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </section>
+    {% endif %}
 {% endblock content %}

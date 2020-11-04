@@ -1,6 +1,5 @@
-const Recipe = require("../models/recipe");
-const File = require("../models/file");
-const { age, date, since } = require("../../lib/utils");
+const Recipe = require("../models/Recipe");
+const File = require("../models/File");
 const fs = require("fs");
 
 module.exports = {
@@ -20,6 +19,9 @@ module.exports = {
       return res.render("admin/recipes/index", { items: recipes });
     } catch (err) {
       console.error(err);
+      return res.render("admin/recipes/index", {
+        error: "Desculpe, não foi possível carregar as receitas",
+      });
     }
   },
   async create(req, res) {
@@ -109,11 +111,21 @@ module.exports = {
         res.send("Please fill " + key);
       }
     });
-    if (req.files.length != 0) {
-      const newFilesPromise = req.files.map((file) => {
-        File.create({ ...file, productId: req.body.id });
+    if (req.files.length > 0) {
+      const newFilesPromise = req.files.map(async (file) => {
+        return await File.create({ ...file });
       });
-      await Promise.all(newFilesPromise);
+      const filesResults = await Promise.all(newFilesPromise);
+      if (filesResults[0].rows) {
+        const recipeFiles = filesResults[0].rows.map(async (file) => {
+          const fileId = file.id;
+          return await File.createRelationBetweenRecipesAndFiles(
+            req.body.id,
+            fileId
+          );
+        });
+        await Promise.all(recipeFiles);
+      }
     }
     if (req.body.removed_files) {
       const removedFiles = req.body.removed_files.split(",");
@@ -125,24 +137,25 @@ module.exports = {
       await Promise.all(removedFilesPromises);
     }
     const results = await Recipe.update(req.body);
+    1;
     const id = results.rows[0].id;
     return res.redirect("recipes/" + id);
   },
   async delete(req, res) {
-    try{
+    try {
       const { id } = req.body;
       const files = await File.findByRecipe(id);
-      files.rows.map(file=>{
-        try{
-          fs.unlinkSync(file.path_file)
-        }catch(err){
-          console.error(err)
+      files.rows.map((file) => {
+        try {
+          fs.unlinkSync(file.path_file);
+        } catch (err) {
+          console.error(err);
         }
-      })
-      await Recipe.delete(id)
+      });
+      await Recipe.delete(id);
       return res.redirect("recipes");
-    }catch(err){
-      console.error(err)
-    }    
+    } catch (err) {
+      console.error(err);
+    }
   },
 };

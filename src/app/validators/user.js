@@ -1,6 +1,6 @@
-const User = require("../models/user");
-const Recipe = require("../models/recipe");
-const File = require("../models/file");
+const User = require("../models/User");
+const Recipe = require("../models/Recipe");
+const File = require("../models/File");
 const { compare } = require("bcryptjs");
 
 module.exports = {

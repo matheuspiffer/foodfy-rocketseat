@@ -1,3 +1,5 @@
+DROP DATABASE IF EXISTS foodfy
+CREATE DATABASE foodfy
 CREATE TABLE "recipes" (
   "id" SERIAL PRIMARY KEY,
   "chef_id" int,
@@ -28,10 +30,10 @@ CREATE TABLE "recipe_files" (
   "recipe_id" int REFERENCES recipes(id),
   "file_id" int REFERENCES files(id)
 );
-ALTER TABLE "recipes" DROP COLUMN "image"
-ALTER TABLE "chefs" DROP COLUMN "avatar_url"
-ALTER TABLE "chefs" ADD "file_id" int REFERENCES "files" ("id")
-ALTER TABLE "recipes" ADD "updated_at" timestamp DEFAULT (now())
+ALTER TABLE "recipes" DROP COLUMN "image";
+ALTER TABLE "chefs" DROP COLUMN "avatar_url";
+ALTER TABLE "chefs" ADD "file_id" int REFERENCES "files" ("id");
+ALTER TABLE "recipes" ADD "updated_at" timestamp DEFAULT (now());
 
 CREATE FUNCTION trigger_set_timestamp()
 RETURNS TRIGGER AS $$
@@ -44,8 +46,8 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER set_timestamp
 BEFORE UPDATE ON recipes
 FOR EACH ROW
-EXECUTE PROCEDURE trigger_set_timestamp()
-ALTER TABLE "files" ADD "recipe_id" int REFERENCES "recipes" ("id")
+EXECUTE PROCEDURE trigger_set_timestamp();
+
 
 CREATE TABLE "users" (
   "id" SERIAL PRIMARY KEY,
@@ -71,38 +73,18 @@ PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;
 
 ALTER TABLE "recipes" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 ALTER TABLE "chefs" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
+ALTER TABLE "files" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 
 ALTER TABLE "recipes"
 DROP CONSTRAINT recipes_user_id_fkey,
 ADD CONSTRAINT recipes_user_id_fkey
 FOREIGN KEY ("user_id")
 REFERENCES "users" ("id")
-ON DELETE CASCADE
+ON DELETE CASCADE;
 
 ALTER TABLE "recipes"
 DROP CONSTRAINT recipes_chef_id_fkey,
 ADD CONSTRAINT recipes_chef_id_fkey
 FOREIGN KEY ("chef_id")
 REFERENCES "chefs" ("id")
-ON DELETE CASCADE
-
-ALTER TABLE "files"
-DROP CONSTRAINT files_recipe_id_fkey,
-ADD CONSTRAINT files_recipe_id_fkey
-FOREIGN KEY ("recipe_id")
-REFERENCES "recipes" ("id")
-ON DELETE CASCADE
-
-ALTER TABLE "recipe_files"
-DROP CONSTRAINT recipe_files_recipe_id_fkey,
-ADD CONSTRAINT recipe_files_recipe_id_fkey
-FOREIGN KEY ("recipe_id")
-REFERENCES "recipes" ("id")
-ON DELETE CASCADE
-
-ALTER TABLE "recipe_files"
-DROP CONSTRAINT recipe_files_chef_id_fkey,
-ADD CONSTRAINT recipe_files_chef_id_fkey
-FOREIGN KEY ("chef_id")
-REFERENCES "chefs" ("id")
-ON DELETE CASCADE
+ON DELETE CASCADE;

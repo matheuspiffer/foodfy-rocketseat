@@ -1,6 +1,6 @@
-const Chef = require("../models/chef");
-const Recipe = require("../models/recipe");
-const File = require("../models/file");
+const Chef = require("../models/Chef");
+const Recipe = require("../models/Recipe");
+const File = require("../models/File");
 const { age, date, since } = require("../../lib/utils");
 const fs = require("fs");
 module.exports = {

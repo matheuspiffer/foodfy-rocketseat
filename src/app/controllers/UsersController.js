@@ -1,4 +1,4 @@
-const User = require("../models/user");
+const User = require("../models/User");
 const mailer = require("../../lib/mailer");
 const crypto = require("crypto");
 module.exports = {

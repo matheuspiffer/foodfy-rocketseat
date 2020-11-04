@@ -2,16 +2,16 @@ const express = require('express')
 const multer = require('../app/middlewares/multer')
 const routes = express.Router()
 
-const clients = require('../app/controllers/clients')
-const search = require('../app/controllers/search')
+const ClientsController = require('../app/controllers/ClientsController')
+const SearchController = require('../app/controllers/SearchController')
 
 
-routes.get('/recipes/search', search.index)
+routes.get('/recipes/search', SearchController.index)
 
-routes.get('/', clients.index)
-routes.get('/recipes', clients.recipes)
-routes.get("/recipes/:index", clients.recipe)
-routes.get('/chefs', clients.chefs)
-routes.get('/about', clients.about)
+routes.get('/', ClientsController.index)
+routes.get('/recipes', ClientsController.recipes)
+routes.get("/recipes/:index", ClientsController.recipe)
+routes.get('/chefs', ClientsController.chefs)
+routes.get('/about', ClientsController.about)
 
 module.exports = routes

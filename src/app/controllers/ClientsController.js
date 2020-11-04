@@ -1,18 +1,25 @@
-const Recipe = require("../models/recipe");
-const Chef = require("../models/chef");
-const File = require("../models/file");
+const Recipe = require("../models/Recipe");
+const Chef = require("../models/Chef");
+const File = require("../models/File");
 
 module.exports = {
   async index(req, res) {
     try {
       const results = await Recipe.all();
+      if (!results) {
+        return res.render("./client/index", {
+          error: "No momento não há receitas cadastradas",
+        });
+      }
       const recipesPromise = results.rows.map(async (recipe) => {
         const recipePath = await File.findByRecipe(recipe.id);
-        const path = recipePath.rows[0].path_file;
-        recipe.path = `${req.protocol}://${req.headers.host}${path.replace(
-          "public",
-          ""
-        )}`;
+        console.log(recipePath.rows);
+        const path = recipePath
+          ? `${req.protocol}://${
+              req.headers.host
+            }${recipePath.rows[0].path_file.replace("public", "")}`
+          : null;
+        recipe.path = path;
         return recipe;
       });
       const recipes = await Promise.all(recipesPromise);
@@ -40,7 +47,6 @@ module.exports = {
       console.error(err);
     }
   },
-
   async recipe(req, res) {
     try {
       const id = req.params.index;
@@ -55,9 +61,10 @@ module.exports = {
           }${file.path_file.replace("public", "")}`,
         };
       });
-      res.render("./client/recipe", { item: recipe, files });
+      return res.render("./client/recipe", { item: recipe, files });
     } catch (err) {
       console.error(err);
+      return res.redirect("/");
     }
   },
   about(req, res) {
@@ -75,6 +82,7 @@ module.exports = {
           )}`,
         };
       });
+      console.log(chefs)
       return res.render("./client/chefs", { chefs });
     } catch (err) {
       console.log(err);

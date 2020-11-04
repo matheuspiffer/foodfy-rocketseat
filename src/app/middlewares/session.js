@@ -1,4 +1,4 @@
-const Chef = require("../models/chef");
+const Chef = require("../models/Chef");
 function onlyUsers(req, res, next) {
   if (!req.session.userId) return res.redirect("/admin/login");
   next();

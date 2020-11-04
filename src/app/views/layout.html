@@ -4,7 +4,7 @@
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="/css/style.css"/>
-        <link rel="stylesheet" href="/css/admin.css"/>
+        <link rel="stylesheet" href="/css/error-messages.css"/>
         <link rel="stylesheet" href="/css/responsive.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         {% block title %}
@@ -12,6 +12,7 @@
         {% endblock title %}
     </head>
     <body>
+        {%include 'client/error.html'%}
         <div class="container">
             <header>
                 <div class="logo">
@@ -20,23 +21,27 @@
                     </a>
                 </div>
                 <div class="menu">
-                    <ul>
-                        <li>
-                            <a href="/about">Sobre</a>
-                        </li>
-                        <li>
-                            <a href="/recipes">Receitas</a>
-                        </li>
-                        <li>
-                            <a href="/chefs">Chefs</a>
-                        </li>
-                    </ul>
-                    {% if items or search %}
-                    <form action="/recipes/search" class="search" method="GET">
-                        <input type="text" name="filter" placeholder="Buscar uma receita" {%if search.term%} value={{search.term}} {%endif%}>
-                        <button type="submit">Buscar</button>
-                    </form>
-                    {% endif %}
+                    <div>
+                        <ul>
+                            <li>
+                                <a href="/about">Sobre</a>
+                            </li>
+                            <li>
+                                <a href="/recipes">Receitas</a>
+                            </li>
+                            <li>
+                                <a href="/chefs">Chefs</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        {% if items or search %}
+                            <form action="/recipes/search" class="search" method="GET">
+                                <input type="text" name="filter" placeholder="Buscar uma receita" {%if search.term%} value={{search.term}} {%endif%}>
+                                <button type="submit">Buscar</button>
+                            </form>
+                        {% endif %}
+                    </div>
                 </div>
             </header>
             {% block content %}{% endblock content %}

@@ -1,8 +1,8 @@
 const express = require("express");
 const routes = express.Router();
-const UsersController = require("../app/controllers/users");
-const SessionController = require("../app/controllers/session");
-const ProfileController = require("../app/controllers/profile");
+const UsersController = require("../app/controllers/UsersController");
+const SessionController = require("../app/controllers/SessionController");
+const ProfileController = require("../app/controllers/ProfileController");
 const sessionValidator = require("../app/validators/session");
 const userValidator = require("../app/validators/user");
 const { onlyAdmins, redirectToProfile } = require("../app/middlewares/session");

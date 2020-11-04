@@ -1,4 +1,4 @@
-const User = require("../models/user");
+const User = require("../models/User");
 const crypto = require("crypto");
 const mailer = require("../../lib/mailer");
 const { hash } = require("bcryptjs");
@@ -13,10 +13,14 @@ module.exports = {
     return res.render("admin/session/forgot-password");
   },
   login(req, res) {
-    req.session.userId = req.user.id;
-    req.session.userAdmin = req.user.is_admin;
-    console.log(req.session.userAdmin);
-    return res.redirect("/admin");
+    try {
+      req.session.userId = req.user.id;
+      req.session.userAdmin = req.user.is_admin;
+      console.log(req.session.userAdmin);
+      return res.redirect("/admin");
+    } catch (err) {
+      console.error(err);
+    }
   },
   logout(req, res) {
     req.session.destroy();
@@ -25,7 +29,7 @@ module.exports = {
   async forgot(req, res) {
     try {
       const user = req.user;
-      console.log(user)
+      console.log(user);
       const token = crypto.randomBytes(20).toString("hex");
       let now = new Date();
       now = now.setHours(now.getHours() + 1);

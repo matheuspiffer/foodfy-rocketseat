@@ -6,7 +6,10 @@
     <form class="form" action='/admin/recipes' method='POST' enctype="multipart/form-data">
         <section class="form-details">
             <h1>Criando receita</h1>
-            <button type="submit">Salvar receita</button>
+            <button  {%if not chefs%} disabled style="cursor: wait" {%endif%} type="submit">Salvar receita</button>
+            {% if not chefs %}
+                <p class="error-message">Um chefe deve ser cadastrado antes da receita</p>
+            {% endif %}
         </section>
         <section class="form-fields">
             {%include 'admin/recipes/fields.html'%}

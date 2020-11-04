@@ -172,7 +172,13 @@
   text-align: left;
   width: 240px;
 }
-
+.error-message{
+  display: flex;
+  margin: 10px 0 0 0 ;
+  font-weight: bold;
+  color: red;
+  text-transform: uppercase;
+}
 .form-fields button:focus {
   outline: none;
 }
