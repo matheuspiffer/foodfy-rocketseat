@@ -6,22 +6,32 @@
         <link rel="stylesheet" href="/css/style.css"/>
         <link rel="stylesheet" href="/css/error-messages.css"/>
         <link rel="stylesheet" href="/css/responsive.css">
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
+            integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ="
+            crossorigin="anonymous"
+        >
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         {% block title %}
             <title>Foodfy</title>
         {% endblock title %}
     </head>
     <body>
+        {%include 'client/side-drawer.html'%}
         {%include 'client/error.html'%}
         <div class="container">
             <header>
+                <button onclick="openNav()" class="toggle">
+                    <i class="fa fa-bars fa-2x"></i>
+                </button>
                 <div class="logo">
                     <a href="/">
                         <img src="/assets/images/logo.png" alt=""/>
                     </a>
                 </div>
                 <div class="menu">
-                    <div>
+                    <div class="menu-items">
                         <ul>
                             <li>
                                 <a href="/about">Sobre</a>

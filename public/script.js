@@ -20,6 +20,13 @@ recipeEl.forEach((recipe, index) => {
     window.location.href = "/recipes/" + recipe.id;
   });
 });
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+}
 
 const Preparation = {
   addIngredient(event) {

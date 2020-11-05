@@ -1,25 +1,53 @@
 @media (max-width: 900px) {
-    section.recipes {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
+  section.recipes {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 @media (max-width: 650px) {
   section.recipes {
     grid-template-columns: repeat(1, 1fr);
-    }
-    .container .infos {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 50px;
-      }
-      .infos .recipes-infos {
-        margin-top: 50px;
-      }
-      .container .infos img {
-          width: 80%;
-          height: 80%;
-      }
+  }
+  .container .infos {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+  }
+  .infos .recipes-infos {
+    margin-top: 50px;
+  }
+  .container .infos img {
+    width: 80%;
+    height: 80%;
+  }
+}
+@media (max-width: 800px) {
+  header .logo {
+    display: none;
+  }
+  .toggle{
+    display: block;
+  }
+  .menu-items {
+    display: none;
+  }
+  header .menu{
+    justify-content: flex-end;
+  }
+  header form.search input {
+    width: 200px;
+  }
+  
+  header form.search button {
+    width: 70px;
+  }
+}
+@media screen and (max-height: 450px) {
+  .sidenav {
+    padding-top: 15px;
+  }
+  .sidenav a {
+    font-size: 18px;
+  }
 }
